@@ -41,7 +41,7 @@ const Dashboard: React.FC = () => {
   // }
 
   return (
-    <Container>
+    <>
       {isLoadingProducts ?
         (
           <LoadingContainer>
@@ -55,7 +55,7 @@ const Dashboard: React.FC = () => {
           </ProductList>
         )
       }
-    </Container>
+    </>
   );
 }
 

@@ -1,12 +1,6 @@
 import styled from 'styled-components';
 import { transparentize } from 'polished';
 
-export const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 export const ProductList = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -28,5 +22,8 @@ export const ProductList = styled.ul`
 `;
 
 export const LoadingContainer = styled.div`
-  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 `;
