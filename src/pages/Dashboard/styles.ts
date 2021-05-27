@@ -1,22 +1,31 @@
 import styled from 'styled-components';
-import { darken } from 'polished';
+import { darken, transparentize } from 'polished';
 
 export const ProductList = styled.ul`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2rem;
   list-style: none;
 
   li {
     display: flex;
     flex-direction: column;
     background: #fff;
-    border-radius: 4px;
-    padding: 20px;
+    border-radius: 0.4rem;
+    padding: 2rem;
 
     img {
       align-self: center;
-      max-width: 250px;
+      width: 15rem;
+      height: 15rem;
+      object-fit: contain;
+      transition: all 0.2s ease-out;
+    }
+
+    &:hover {
+      img {
+        transform: scale(1.05);
+      }
     }
 
     > strong {
@@ -27,15 +36,15 @@ export const ProductList = styled.ul`
     }
 
     > span {
-      font-size: 21px;
+      font-size: 2.1rem;
       font-weight: bold;
-      margin: 5px 0 20px;
+      margin: 0.5rem 0 2rem;
     }
 
     button {
-      background: #FF9000;
-      color: #fff;
-      border: 0;
+      background: transparent;
+      color: var(--color-text-primary);
+      border: 2px solid var(--color-primary);
       border-radius: 4px;
       overflow: hidden;
       margin-top: auto;
@@ -45,17 +54,16 @@ export const ProductList = styled.ul`
       transition: background 0.2s;
 
       &:hover {
-        background: ${darken(0.06, '#FF9000')};
+        background: ${transparentize(0.9, '#FF9000')};
       }
 
       div {
         display: flex;
         align-items: center;
-        padding: 12px;
-        background: rgba(0, 0, 0, 0.1);
+        padding: 1.2rem;
 
         svg {
-          margin-right: 5px;
+          color: var(--color-text-primary) !important
         }
       }
 
@@ -63,7 +71,20 @@ export const ProductList = styled.ul`
         flex: 1;
         text-align: center;
         font-weight: bold;
+        font-size: 1.4rem
       }
     }
+  }
+
+  @media(max-width: 1000px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media(max-width: 700px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media(max-width: 500px) {
+    grid-template-columns: repeat(1, 1fr);
   }
 `;

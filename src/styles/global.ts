@@ -4,7 +4,9 @@ import colors from './colors';
 
 export default createGlobalStyle`
   :root {
-    --teste: '#000000'
+    --color-primary: #FF9000;
+    --color-text-primary: #4B4B62;
+    --color-white: #FFFFFF
   }
 
   html {
@@ -19,7 +21,9 @@ export default createGlobalStyle`
   }
 
   body {
-    background: #000;
+    background: radial-gradient(circle, #3A4B62 10%, #4B4B62 100%);
+
+    /* background: var(--teste); */
     color: #000000;
     -webkit-font-smoothing: antialiased;
   }
@@ -27,6 +31,11 @@ export default createGlobalStyle`
   body, input, button {
     font-family: 'Roboto Slab', serif;
     font-size: 1rem;
+  }
+
+  #root {
+    max-width: 85%;
+    margin: 0 auto;
   }
 
   button {
