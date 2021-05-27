@@ -6,4 +6,6 @@ export interface Product {
   description: string,
   image: string,
   category: string,
+
+  favorite?: boolean,
 }

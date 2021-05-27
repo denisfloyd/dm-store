@@ -1,5 +1,6 @@
 import React from 'react';
 import { MdAddShoppingCart } from 'react-icons/md';
+import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { Product } from '../../types';
 
 import { Container } from './styles';
@@ -16,6 +17,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addProductToCart }) 
         src={product.image}
         alt={String(product.title)}
       />
+      { product.favorite ?
+        (<AiFillHeart size={24} color="#FF6666"/>) :
+        (<AiOutlineHeart size={24} color="#FF6666"/>)
+      }
+
       <strong>{product.title}</strong>
       <span>{product.priceFormatted}</span>
       <button

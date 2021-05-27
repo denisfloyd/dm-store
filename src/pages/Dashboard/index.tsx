@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => {
 
       setProducts([
         ...response.map((product) => {
-          return { ...product, priceFormatted: formatPrice(product.price) };
+          return { ...product, priceFormatted: formatPrice(product.price), favorite: true };
         }),
       ]);
     }

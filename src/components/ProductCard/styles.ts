@@ -7,6 +7,7 @@ export const Container = styled.li`
   background: #fff;
   border-radius: 0.4rem;
   padding: 2rem;
+  position: relative;
 
   img {
     align-self: center;
@@ -66,6 +67,18 @@ export const Container = styled.li`
       text-align: center;
       font-weight: bold;
       font-size: 1.4rem
+    }
+  }
+
+  > svg {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    transition: scale 0.2s ease-out;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.05);
     }
   }
 `

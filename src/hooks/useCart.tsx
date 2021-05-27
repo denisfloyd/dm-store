@@ -11,6 +11,7 @@ interface CartContextData {
   addProduct: (productId: number) => Promise<void>;
   removeProduct: (productId: number) => void;
   // updateProductAmount: ({ productId, amount }: UpdateProductAmount) => void;
+  addProductToFavorites: (id: number) => void;
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
@@ -63,9 +64,34 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     }
   };
 
+  const addProductToFavorites = (id: number) => {
+    try {
+      const favotitesStorage = localStorage.getItem("@dmstore:favotites");
+      let favotires: number[] = [];
+
+      if (favotitesStorage) {
+        favotires = JSON.parse(favotitesStorage);
+      }
+
+      const favotiteExistsIndex = favotires.findIndex(favorite => {
+        return favorite === id
+      });
+
+      if(favotiteExistsIndex) {
+        favotires.splice(favotiteExistsIndex, 1);
+      } else {
+        favotires.push(id);
+      }
+
+      localStorage.setItem("@dmstore:favotites", JSON.stringify(favotires));
+    } catch {
+      toast.error('Erro ao adicionar/remover produto favorito');
+    }
+  }
+
   return (
     <CartContext.Provider
-      value={{ cart, addProduct, removeProduct }}
+      value={{ cart, addProduct, removeProduct, addProductToFavorites }}
     >
       {children}
     </CartContext.Provider>
