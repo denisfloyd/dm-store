@@ -44,4 +44,9 @@ export default createGlobalStyle`
   .MuiCircularProgress-colorPrimary {
     color: var(--color-primary) !important;
   }
+
+  .MuiMenuItem-root {
+    font-size: 1.4rem !important;
+    text-transform: capitalize;
+  }
 `;

@@ -1,30 +1,46 @@
 import React, { useEffect, useState } from 'react';
+import { CircularProgress, MenuItem } from '@material-ui/core';
 
 import { api } from '../../api/api';
 import { Product } from '../../types';
 import { formatPrice } from '../../utils/format';
 
 import ProductCard from '../../components/ProductCard';
-import { ProductList, LoadingContainer } from './styles';
+import {
+  SelectContainer,
+  InputLabelSelect,
+  Select,
+  SelectMenuIcon,
+  ProductList,
+  LoadingContainer }
+from './styles';
 
-import { CircularProgress } from '@material-ui/core';
 import { useCart } from '../../hooks/useCart';
 
 const Dashboard: React.FC = () => {
   const { favorites, addProduct: addProductToCart, addProductToFavorites } = useCart();
 
+  const [categories, setCategories] = useState<string[]>();
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState<boolean>(true);
 
-  // const { addProduct, cart } = useCart();
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
 
-  // const cartItemsAmount = cart.reduce((sumAmount, product) => {
-  //   return { ...sumAmount, [product.id]: product.amount };
-  // }, {} as CartItemsAmount);
+
+  useEffect(() => {
+    async function loadCategories() {
+      const response = (await api("products/categories")).data as string[];
+
+      setCategories(response);
+    }
+
+    loadCategories();
+  }, []);
 
   useEffect(() => {
     async function loadProducts() {
-      const response = (await api("products")).data as Product[];
+      const selectedCategoryFilter = selectedCategory !== '' ? `/category/${selectedCategory}`: '';
+      const response = (await api(`products${selectedCategoryFilter}`)).data as Product[];
 
       setProducts([
         ...response.map((product) => {
@@ -41,7 +57,7 @@ const Dashboard: React.FC = () => {
     }
 
     loadProducts();
-  }, []);
+  }, [selectedCategory]);
 
   // function handleAddProduct(id: number) {
   //   addProduct(id);
@@ -56,9 +72,32 @@ const Dashboard: React.FC = () => {
     }
   }
 
+  const handleFilterCategory = (event: any) => {
+    if(event.target.value !== selectedCategory) {
+      setIsLoadingProducts(true);
+      setSelectedCategory(event.target.value);
+    }
+  };
 
   return (
     <>
+      <SelectContainer variant="filled">
+        <InputLabelSelect id="category-select-label">Categoria</InputLabelSelect>
+        <Select
+          labelId="category-select"
+          id="category-select"
+          value={selectedCategory}
+          onChange={handleFilterCategory}
+        >
+          <MenuItem value="">
+            <em>Todas</em>
+          </MenuItem>
+          { categories && categories.map(category => (
+            <SelectMenuIcon value={category}>{category}</SelectMenuIcon>
+          ))}
+        </Select>
+      </SelectContainer>
+
       {isLoadingProducts ?
         (
           <LoadingContainer>
