@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default createGlobalStyle`
   :root {
@@ -28,7 +29,7 @@ export default createGlobalStyle`
 
   body, input, button {
     font-family: 'Roboto Slab', serif;
-    font-size: 1rem;
+    font-size: 1.4rem;
   }
 
   #root {
@@ -38,5 +39,9 @@ export default createGlobalStyle`
 
   button {
     cursor: pointer;
+  }
+
+  .MuiCircularProgress-colorPrimary {
+    color: var(--color-primary) !important;
   }
 `;

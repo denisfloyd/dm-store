@@ -36,49 +36,58 @@ export const Container = styled.li`
     margin: 0.5rem 0 2rem;
   }
 
-  button {
-    background: transparent;
-    color: var(--color-text-primary);
-    border: 2px solid var(--color-primary);
-    border-radius: 4px;
-    overflow: hidden;
-    margin-top: auto;
 
+`
+
+export const AddToCardButton = styled.button`
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-primary);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: auto;
+
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+
+  &:hover {
+    background: ${transparentize(0.9, '#FF9000')};
+  }
+
+  div {
     display: flex;
     align-items: center;
-    transition: background 0.2s;
+    padding: 1.2rem;
 
-    &:hover {
-      background: ${transparentize(0.9, '#FF9000')};
-    }
-
-    div {
-      display: flex;
-      align-items: center;
-      padding: 1.2rem;
-
-      svg {
-        color: var(--color-text-primary) !important
-      }
-    }
-
-    span {
-      flex: 1;
-      text-align: center;
-      font-weight: bold;
-      font-size: 1.4rem
+    svg {
+      color: var(--color-text-primary) !important
     }
   }
 
-  > svg {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    transition: scale 0.2s ease-out;
-    cursor: pointer;
+  span {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.4rem
+  }
+`;
 
-    &:hover {
+export const FavoriteContainer = styled.button`
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: none;
+  background-color: transparent;
+
+  svg {
+    transition: scale 0.2s ease-out;
+  }
+
+  &:hover {
+    svg {
       transform: scale(1.05);
     }
   }
+
 `

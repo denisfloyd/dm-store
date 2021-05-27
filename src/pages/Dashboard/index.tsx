@@ -8,8 +8,11 @@ import ProductCard from '../../components/ProductCard';
 import { ProductList, LoadingContainer } from './styles';
 
 import { CircularProgress } from '@material-ui/core';
+import { useCart } from '../../hooks/useCart';
 
 const Dashboard: React.FC = () => {
+  const { favorites, addProduct: addProductToCart, addProductToFavorites } = useCart();
+
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState<boolean>(true);
 
@@ -25,7 +28,12 @@ const Dashboard: React.FC = () => {
 
       setProducts([
         ...response.map((product) => {
-          return { ...product, priceFormatted: formatPrice(product.price), favorite: true };
+          const isFavoriteProduct = favorites.find(favorite => favorite === product.id);
+          return {
+            ...product,
+            priceFormatted: formatPrice(product.price),
+            favorite: !!isFavoriteProduct
+          };
         }),
       ]);
 
@@ -39,6 +47,16 @@ const Dashboard: React.FC = () => {
   //   addProduct(id);
   // }
 
+  function handleProductFavorite(id: number, productIndex: number) {
+    const result = addProductToFavorites(id);
+    if(result) {
+      const updatedProducts = [...products];
+      updatedProducts[productIndex].favorite = !updatedProducts[productIndex].favorite;
+      setProducts(updatedProducts);
+    }
+  }
+
+
   return (
     <>
       {isLoadingProducts ?
@@ -48,8 +66,12 @@ const Dashboard: React.FC = () => {
           </LoadingContainer>
         ) : (
           <ProductList>
-            { products && products.map((product: Product) => (
-              <ProductCard product={product} addProductToCart={() => {}}/>
+            { products && products.map((product: Product, index: number) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                addProductToFavorites={() => handleProductFavorite(product.id, index)}
+              />
             ))}
           </ProductList>
         )
