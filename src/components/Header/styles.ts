@@ -100,6 +100,7 @@ export const LogoTitle = styled.span`
 
 export const SignIn = styled.a`
   display: block;
+
   &:hover {
     cursor: pointer;
   }

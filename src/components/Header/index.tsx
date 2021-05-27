@@ -4,9 +4,10 @@ import { MdShoppingCart, MdPerson, MdMenu } from "react-icons/md";
 
 import logo from "../../assets/images/logo-dm.png";
 import { Container, Cart, BadgeCart, LogoTitle, ContainerLogo, ContainerOptions, SignIn, Menu, DropdownSignIn, DropdownDivider } from "./styles";
-// import { useCart } from "../../hooks/useCart";
+import { useCart } from "../../hooks/useCart";
 
 const PrimaryMenuContent = (props: { items: number }): JSX.Element => {
+  const { items } = props;
   return (
     <ContainerOptions>
       <Cart>
@@ -15,9 +16,12 @@ const PrimaryMenuContent = (props: { items: number }): JSX.Element => {
             <strong>Meu carrinho</strong>
           </div>
           <div className="cart-icon">
-            <BadgeCart>
-              {props.items}
-            </BadgeCart>
+            {
+              items > 0 &&
+              <BadgeCart>
+                {items}
+              </BadgeCart>
+            }
             <MdShoppingCart size={36} color="#FFF" />
           </div>
         </Cart>
@@ -30,10 +34,8 @@ const PrimaryMenuContent = (props: { items: number }): JSX.Element => {
 
 
 const Header = (): JSX.Element => {
-  // const { cart } = useCart();
-  // const cartSize = cart.length;
-  const cartSize = 0;
-  const userLogged = false;
+  const { cart } = useCart();
+  const cartSize = cart.length;
 
   return (
     <Container>
@@ -59,9 +61,12 @@ const Header = (): JSX.Element => {
           <Cart>
             <div className="cart-content">
               <div className="cart-icon">
-                <BadgeCart>
-                  {cartSize}
-                </BadgeCart>
+                {
+                  cartSize > 0 &&
+                  <BadgeCart>
+                    {cartSize}
+                  </BadgeCart>
+                }
                 <MdShoppingCart size={36} color="#494B62" />
               </div>
               <div>
