@@ -5,10 +5,15 @@ import { Product } from '../../types';
 import { formatPrice } from '../../utils/format';
 
 import ProductCard from '../../components/ProductCard';
-import { ProductList } from './styles';
+import { Container, ProductList, LoadingContainer } from './styles';
+
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { CircularProgress } from '@material-ui/core';
 
 const Dashboard: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [isLoadingProducts, setIsLoadingProducts] = useState<boolean>(true);
+
   // const { addProduct, cart } = useCart();
 
   // const cartItemsAmount = cart.reduce((sumAmount, product) => {
@@ -24,6 +29,8 @@ const Dashboard: React.FC = () => {
           return { ...product, priceFormatted: formatPrice(product.price), favorite: true };
         }),
       ]);
+
+      setIsLoadingProducts(false);
     }
 
     loadProducts();
@@ -34,11 +41,21 @@ const Dashboard: React.FC = () => {
   // }
 
   return (
-    <ProductList>
-      { products && products.map((product: Product) => (
-        <ProductCard product={product} addProductToCart={() => {}}/>
-      ))}
-    </ProductList>
+    <Container>
+      {isLoadingProducts ?
+        (
+          <LoadingContainer>
+            <CircularProgress />
+          </LoadingContainer>
+        ) : (
+          <ProductList>
+            { products && products.map((product: Product) => (
+              <ProductCard product={product} addProductToCart={() => {}}/>
+            ))}
+          </ProductList>
+        )
+      }
+    </Container>
   );
 }
 

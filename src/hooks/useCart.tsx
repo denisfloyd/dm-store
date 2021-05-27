@@ -1,6 +1,8 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { api } from '../api/api';
 import { Product } from '../types';
+import { formatPrice } from '../utils/format';
 
 interface CartProviderProps {
   children: ReactNode;
