@@ -1,6 +1,12 @@
 import { createGlobalStyle } from 'styled-components';
 
+import colors from './colors';
+
 export default createGlobalStyle`
+  :root {
+    --teste: '#000000'
+  }
+
   html {
     font-size: 62.5%;
   }
@@ -13,8 +19,8 @@ export default createGlobalStyle`
   }
 
   body {
-    background: #fff;
-    color: #000;
+    background: #000;
+    color: #000000;
     -webkit-font-smoothing: antialiased;
   }
 
