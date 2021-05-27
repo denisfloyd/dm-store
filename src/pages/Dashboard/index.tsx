@@ -5,9 +5,8 @@ import { Product } from '../../types';
 import { formatPrice } from '../../utils/format';
 
 import ProductCard from '../../components/ProductCard';
-import { Container, ProductList, LoadingContainer } from './styles';
+import { ProductList, LoadingContainer } from './styles';
 
-import InfiniteScroll from 'react-infinite-scroll-component';
 import { CircularProgress } from '@material-ui/core';
 
 const Dashboard: React.FC = () => {
