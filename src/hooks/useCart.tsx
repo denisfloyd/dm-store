@@ -10,10 +10,11 @@ interface CartProviderProps {
 
 interface CartContextData {
   cart: Product[];
+  favorites: number[];
   addProduct: (productId: number) => Promise<void>;
   removeProduct: (productId: number) => void;
   // updateProductAmount: ({ productId, amount }: UpdateProductAmount) => void;
-  addProductToFavorites: (id: number) => void;
+  addProductToFavorites: (id: number) => boolean;
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
@@ -24,6 +25,16 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
     if (storagedCart) {
       return JSON.parse(storagedCart);
+    }
+
+    return [];
+  });
+
+  const [favorites, setFavorites] = useState<number[]>(() => {
+    const favoritesStorage = localStorage.getItem("@dmstore:favorites");
+
+    if (favoritesStorage) {
+      return JSON.parse(favoritesStorage);
     }
 
     return [];
@@ -68,32 +79,31 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
 
   const addProductToFavorites = (id: number) => {
     try {
-      const favotitesStorage = localStorage.getItem("@dmstore:favotites");
-      let favotires: number[] = [];
-
-      if (favotitesStorage) {
-        favotires = JSON.parse(favotitesStorage);
-      }
-
-      const favotiteExistsIndex = favotires.findIndex(favorite => {
+      const favoritesToUpdate = [...favorites];
+      const favoriteExistsIndex = favoritesToUpdate.findIndex(favorite => {
         return favorite === id
       });
 
-      if(favotiteExistsIndex) {
-        favotires.splice(favotiteExistsIndex, 1);
+      if(favoriteExistsIndex >= 0) {
+        favoritesToUpdate.splice(favoriteExistsIndex, 1);
       } else {
-        favotires.push(id);
+        favoritesToUpdate.push(id);
       }
 
-      localStorage.setItem("@dmstore:favotites", JSON.stringify(favotires));
+      localStorage.setItem("@dmstore:favorites", JSON.stringify(favoritesToUpdate));
+      setFavorites(favoritesToUpdate);
+      toast.success(`Produto ${favoriteExistsIndex >= 0 ? 'des': ''}favoritado!`);
+
+      return true;
     } catch {
       toast.error('Erro ao adicionar/remover produto favorito');
+      return false;
     }
   }
 
   return (
     <CartContext.Provider
-      value={{ cart, addProduct, removeProduct, addProductToFavorites }}
+      value={{ cart, favorites, addProduct, removeProduct, addProductToFavorites }}
     >
       {children}
     </CartContext.Provider>

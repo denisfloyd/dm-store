@@ -1,12 +1,10 @@
 import styled from 'styled-components';
-import { transparentize } from 'polished';
 
 export const ProductList = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 2rem;
   list-style: none;
-  /* flex: 1; */
 
   @media(max-width: 1100px) {
     grid-template-columns: repeat(3, 1fr);

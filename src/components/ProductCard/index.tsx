@@ -3,28 +3,35 @@ import { MdAddShoppingCart } from 'react-icons/md';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import { Product } from '../../types';
 
-import { Container } from './styles';
+import { Container, AddToCardButton, FavoriteContainer } from './styles';
+import { useCart } from '../../hooks/useCart';
 
 interface ProductCardProps {
   product: Product;
-  addProductToCart: () => void
+  addProductToFavorites: () => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, addProductToCart }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, addProductToFavorites }) => {
+  function handleProductFavorite() {
+    addProductToFavorites()
+  }
+
   return (
     <Container>
       <img
         src={product.image}
         alt={String(product.title)}
       />
-      { product.favorite ?
-        (<AiFillHeart size={24} color="#FF6666"/>) :
-        (<AiOutlineHeart size={24} color="#FF6666"/>)
-      }
+      <FavoriteContainer onClick={handleProductFavorite}>
+        { product.favorite ?
+          (<AiFillHeart size={24} color="#FF6666" />) :
+          (<AiOutlineHeart size={24} color="#FF6666"/>)
+        }
+      </FavoriteContainer>
 
       <strong>{product.title}</strong>
       <span>{product.priceFormatted}</span>
-      <button
+      <AddToCardButton
         type="button"
         data-testid="add-product-button"
         // onClick={() => handleAddProduct(product.id)}
@@ -35,7 +42,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addProductToCart }) 
         </div>
 
         <span>ADICIONAR AO CARRINHO</span>
-      </button>
+      </AddToCardButton>
     </Container>
   )
 }
