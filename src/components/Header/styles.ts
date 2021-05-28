@@ -6,13 +6,6 @@ export const Container = styled.header`
   justify-content: space-between;
   align-items: center;
   margin: 50px 0;
-  a {
-    transition: opacity 0.2s;
-
-    &:hover {
-      opacity: 0.7;
-    }
-  }
 `;
 
 export const ContainerLogo = styled(Link)`
@@ -24,17 +17,79 @@ export const ContainerLogo = styled(Link)`
 export const ContainerOptions = styled.div`
   display: flex;
 
+  .user-logged {
+    display: flex;
+    color: #FFF;
+    font-weight: bold;
+    align-items: center;
+    font-size: 1.5rem;
+    position: relative;
+
+    .logout {
+      z-index: 3;
+      height: 0;
+      overflow: hidden;
+      background-color: #FFF;
+      animation: slide-logout .3s linear;
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 4rem;
+      width: 25rem;
+      border: solid 1px #F9B902;
+      border-radius: .5rem;
+
+      &-content {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        padding: 1.5rem 1rem 1rem 1rem;
+
+        strong {
+          color: #494B62;
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      .logout {
+        display: block;
+        height: 6rem;
+
+        &-content {
+          strong {
+            margin-left: 1rem;
+            margin-bottom: 1rem;
+          }
+        }
+      }
+    }
+
+    @keyframes slide-logout {
+      from {
+        height: 0;
+      }
+      to {
+        height: 6rem;
+      }
+    }
+
+  }
+
   @media(max-width: 800px) {
     display: none;
   }
 `;
 
-// export const Cart = styled(Link)`
-export const Cart = styled.a`
+export const Cart = styled(Link)`
   display: flex;
   align-items: center;
   text-decoration: none;
   margin-right: 1.5rem;
+  position: relative;
 
   .cart-content {
     display: flex;
@@ -49,6 +104,96 @@ export const Cart = styled.a`
   .cart-label {
     color: #494B62;
     font-size: 1.5rem;
+  }
+
+  .cart-dropdown {
+    z-index: 3;
+    height: 0;
+    overflow: hidden;
+    background-color: #FFF;
+    animation: slide-cart .3s linear;
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 4rem;
+    width: 30rem;
+    border: solid 1px #F9B902;
+    border-radius: .5rem;
+
+    &-total {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: absolute;
+      bottom: 0;
+      padding: 1rem;
+
+      span {
+        font-size: 1.5rem;
+      }
+
+      strong {
+        font-size: 2rem;
+      }
+
+      span, strong {
+        font-weight: bold;
+        color: #494B62;
+      }
+    }
+
+    .see-more {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      a {
+        text-decoration: none;
+        color: #F9B902;
+        font-weight: bold;
+        font-size: 1.5rem;
+      }
+    }
+
+    .product {
+      display: flex;
+      width: 90%;
+      margin: 2rem auto;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid #F9B902;
+
+      img {
+        width: 6rem;
+      }
+
+      div {
+        display: flex;
+        flex-direction: column;
+        margin: 0 2rem;
+        text-wrap: break-word;
+        text-align: left;
+      }
+
+      &-title {
+        font-weight: bold;
+        font-size: 1.5rem;
+        color: #494B62;
+      }
+
+      &-total {
+        display: flex;
+        align-items: flex-end;
+        font-size: 1.5rem;
+        color: #494B62;
+
+        strong {
+          color: #494B62;
+          margin-left: .5rem;
+          font-size: 1.7rem;
+        }
+      }
+    }
   }
 
   div {
@@ -66,12 +211,26 @@ export const Cart = styled.a`
     }
   }
 
+  @keyframes slide-cart {
+    from {
+      height: 0;
+    }
+    to {
+      height: 40rem;
+    }
+  }
+
   @media(max-width: 800px) {
     margin-right: 0;
   }
 
   &:hover {
     cursor: pointer;
+
+    .cart-dropdown {
+      display: block;
+      height: 40rem;
+    }
   }
 `;
 
@@ -102,6 +261,29 @@ export const LogoTitle = styled.span`
 export const SignIn = styled(Link)`
   display: block;
   text-decoration: none
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const Favorites = styled(Link)`
+  display: block;
+  text-decoration: none;
+  margin-right: 2rem;
+
+  div {
+    display: flex;
+    align-items: center;
+    color: #494B62;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0 1rem;
+
+    span {
+      margin-left: 1rem;
+    }
+  }
 
   &:hover {
     cursor: pointer;
@@ -151,6 +333,28 @@ export const Menu = styled.div`
     width: 25rem;
     border: solid 1px #F9B902;
     border-radius: .5rem;
+
+    a, div {
+      transition: opacity 0.2s;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  .logout {
+    display: flex;
+    align-items: center;
+    padding: 2rem 0 0 1.5rem;
+    color: #494B62;
+
+
+    strong {
+      margin-left: 1rem;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
   }
 
   &:hover {
@@ -158,7 +362,7 @@ export const Menu = styled.div`
 
     > div {
       display: block;
-      height: 15rem;
+      height: 20rem;
     }
   }
 
@@ -167,7 +371,7 @@ export const Menu = styled.div`
       height: 0;
     }
     to {
-      height: 15rem;
+      height: 20rem;
     }
   }
 

@@ -50,7 +50,7 @@ export const Input = styled.input`
   }
 `;
 
-export const User = styled.div`
+export const UserIcon = styled.div`
   width: 7rem;
   height: 7rem;
   border-radius: 50%;

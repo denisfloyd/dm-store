@@ -12,7 +12,6 @@ export interface Product {
 }
 
 export interface User {
-  email: string,
-  password: string,
-  name: string,
+  username: string,
+  token: string,
 }
