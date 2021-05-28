@@ -39,7 +39,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     <Container>
       <FavoriteContainer onClick={() => handleProductFavorite(product.id)}>
         {favorites.includes(product.id) ? (
-          <AiFillHeart size={24} color="#FF6666" />
+          <AiFillHeart data-testid="favorite" size={24} color="#FF6666" />
         ) : (
           <AiOutlineHeart size={24} color="#FF6666" />
         )}

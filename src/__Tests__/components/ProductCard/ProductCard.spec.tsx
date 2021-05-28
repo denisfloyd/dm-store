@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ImgHTMLAttributes } from 'react';
 import { render, screen } from '@testing-library/react';
 
 import ProductCard from '../../../components/ProductCard';
@@ -35,7 +35,7 @@ describe('ProductCard component', () => {
   };
 
   it('it should render correctly', () => {
-    const { debug } = render(
+    const { getByText, getByTestId, debug, getByAltText } = render(
       <ProductCard
         product={product}
         amountInCart={product.amount}
@@ -43,10 +43,13 @@ describe('ProductCard component', () => {
       />,
     );
 
-    screen.logTestingPlaygroundURL();
+    expect(getByText('Fake Product')).toBeInTheDocument();
+    expect(getByTestId('favorite')).toBeInTheDocument();
+    expect(getByText('R$ 10,00')).toBeInTheDocument();
+    const cartSizeCounter = getByTestId('cart-product-quantity');
+    expect(cartSizeCounter).toHaveTextContent('1');
 
-    debug();
-
-    expect(true).toBeTruthy();
+    const image = getByAltText('Fake Product') as HTMLImageElement;
+    expect(image.src).toBe(product.image);
   });
 });
