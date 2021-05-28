@@ -8,6 +8,7 @@ export interface Product {
   category: string,
 
   favorite?: boolean,
+  amount: number;
 }
 
 export interface User {

@@ -24,10 +24,9 @@ export const Container = styled.li`
   }
 
   > strong {
-    font-size: 16px;
-    line-height: 20px;
-    color: #333;
-    margin-top: 5px;
+    font-size: 1.6rem;
+    line-height: 2rem;
+    margin-top: 0.5rem;
   }
 
   > span {
@@ -35,9 +34,7 @@ export const Container = styled.li`
     font-weight: bold;
     margin: 0.5rem 0 2rem;
   }
-
-
-`
+`;
 
 export const AddToCardButton = styled.button`
   background: transparent;
@@ -59,9 +56,12 @@ export const AddToCardButton = styled.button`
     display: flex;
     align-items: center;
     padding: 1.2rem;
+    font-size: 1.6rem;
+    background-color: var(--color-primary-light);
 
     svg {
-      color: var(--color-text-primary) !important
+      margin-right: 0.3rem;
+      color: var(--color-text-primary) !important;
     }
   }
 
@@ -69,14 +69,14 @@ export const AddToCardButton = styled.button`
     flex: 1;
     text-align: center;
     font-weight: bold;
-    font-size: 1.4rem
+    font-size: 1.4rem;
   }
 `;
 
 export const FavoriteContainer = styled.button`
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 1.5rem;
+  right: 1.5rem;
   border: none;
   background-color: transparent;
 
@@ -89,5 +89,4 @@ export const FavoriteContainer = styled.button`
       transform: scale(1.05);
     }
   }
-
-`
+`;
