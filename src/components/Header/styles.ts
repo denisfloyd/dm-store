@@ -262,7 +262,7 @@ export const LogoTitle = styled.span`
 
 export const SignIn = styled(Link)`
   display: block;
-  text-decoration: none
+  text-decoration: none;
 
   &:hover {
     cursor: pointer;
