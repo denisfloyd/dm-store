@@ -30,7 +30,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, setIsOpen, children }) => {
           transform: 'translate(-50%, -50%)',
           background: '#FFFFFF',
           borderRadius: '8px',
-          width: '70rem',
+          width: '65rem',
           border: 'none',
         },
         overlay: {

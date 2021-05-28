@@ -53,4 +53,10 @@ export default createGlobalStyle`
     font-size: 1.4rem !important;
     text-transform: capitalize;
   }
+
+  @media (max-width: 800px) {
+    .ReactModal__Content {
+      width: 50rem !important;
+    }
+  }
 `;

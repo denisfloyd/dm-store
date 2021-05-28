@@ -11,6 +11,12 @@ export const Content = styled.div`
 
     max-width: 60%;
   }
+
+  @media (max-width: 800px) {
+    > div {
+      max-width: 50%;
+    }
+  }
 `;
 
 export const ProductOtherInfosContainer = styled.div`
