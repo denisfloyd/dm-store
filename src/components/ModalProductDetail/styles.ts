@@ -35,4 +35,11 @@ export const CategoryTitle = styled.strong`
   text-transform: capitalize;
 `;
 
-export const DescriptionContainer = styled.div``;
+export const CloseIcon = styled.span`
+  position: absolute;
+  top: 1.3rem;
+  right: 1.3rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  cursor: pointer;
+`;

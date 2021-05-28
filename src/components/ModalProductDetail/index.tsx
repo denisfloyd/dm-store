@@ -7,7 +7,7 @@ import {
   Content,
   ProductOtherInfosContainer,
   CategoryTitle,
-  DescriptionContainer,
+  CloseIcon,
 } from './styles';
 import ProductCard from '../ProductCard';
 
@@ -39,12 +39,14 @@ const ModalProductDetail: React.FC<ModalProductDetailProps> = ({
             <ProductOtherInfosContainer>
               <CategoryTitle>{product.category}</CategoryTitle>
 
-              <DescriptionContainer>
+              <div>
                 <p>Descrição:</p>
                 <strong>{product.description}</strong>
-              </DescriptionContainer>
+              </div>
             </ProductOtherInfosContainer>
           </Content>
+
+          <CloseIcon onClick={() => setIsOpen()}>X</CloseIcon>
         </Container>
       )}
     </Modal>
