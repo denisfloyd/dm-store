@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { darken, lighten } from 'polished';
 
 export const Container = styled.div`
@@ -11,21 +11,6 @@ export const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    button {
-      background: var(--color-success);
-      color: var(--color-white);
-      border: 0;
-      border-radius: 4px;
-      padding: 1.2rem 2rem;
-      font-weight: bold;
-      text-transform: uppercase;
-      transition: background 0.2s;
-
-      &:hover {
-        background: ${darken(0.06, '#109E41')};
-      }
-    }
   }
 `;
 
@@ -92,6 +77,30 @@ export const ProductTable = styled.table`
         color: ${lighten(0.25, '#FF9000')};
         cursor: not-allowed;
       }
+    }
+  }
+`;
+
+export const CheckoutButton = styled.button`
+  background: var(--color-success);
+  color: var(--color-white);
+  border: 0;
+  border-radius: 4px;
+  padding: 1.2rem 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background 0.2s;
+
+  &:hover {
+    background: ${darken(0.06, '#109E41')};
+  }
+
+  &:disabled {
+    color: ${lighten(0.25, '#109E41')};
+    cursor: not-allowed;
+
+    &:hover {
+      background: var(--color-success);
     }
   }
 `;

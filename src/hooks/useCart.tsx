@@ -16,6 +16,7 @@ interface CartContextData {
   addProduct: (product: Product) => Promise<void>;
   updateProductAmount: ({ productId, amount }: UpdateProductAmount) => void;
   removeProduct: (productId: number) => void;
+  clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
@@ -107,6 +108,11 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     }
   };
 
+  const clearCart = (): void => {
+    setCart([]);
+    localStorage.removeItem('@dmstore:cart');
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -114,6 +120,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
         addProduct,
         updateProductAmount,
         removeProduct,
+        clearCart,
       }}
     >
       {children}

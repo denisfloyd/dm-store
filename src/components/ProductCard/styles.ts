@@ -1,5 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { transparentize } from 'polished';
+
+interface ContentProps {
+  isAbleToSeeDetail: boolean;
+}
 
 export const Container = styled.li`
   display: flex;
@@ -9,6 +13,23 @@ export const Container = styled.li`
   padding: 2rem;
   position: relative;
 
+  &:hover img {
+    transform: scale(1.05);
+  }
+`;
+
+export const Content = styled.div<ContentProps>`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  ${props =>
+    props.isAbleToSeeDetail &&
+    css`
+      cursor: pointer;
+    `}
+
   img {
     align-self: center;
     width: 15rem;
@@ -17,22 +38,21 @@ export const Container = styled.li`
     transition: all 0.2s ease-out;
   }
 
-  &:hover {
-    img {
-      transform: scale(1.05);
-    }
+  > div {
+    display: flex;
+    flex-direction: column;
   }
 
-  > strong {
+  strong {
     font-size: 1.6rem;
     line-height: 2rem;
-    margin-top: 0.5rem;
+    margin-top: 2rem;
   }
 
-  > span {
+  span {
     font-size: 2.1rem;
     font-weight: bold;
-    margin: 0.5rem 0 2rem;
+    margin: 0.5rem 0 1rem;
   }
 `;
 

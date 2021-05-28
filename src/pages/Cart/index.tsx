@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   MdDelete,
   MdAddCircleOutline,
   MdRemoveCircleOutline,
 } from 'react-icons/md';
+import { useHistory } from 'react-router';
+import { toast } from 'react-toastify';
+
+import { CircularProgress } from '@material-ui/core';
+
+import { api } from '../../api/api';
 
 import { useCart } from '../../hooks/useCart';
 import { Product } from '../../types';
 import { formatPrice } from '../../utils/format';
 
-import { Container, ProductTable, Total } from './styles';
+import { Container, ProductTable, CheckoutButton, Total } from './styles';
 
 interface ProductFormatted extends Product {
   priceFormatted: string;
@@ -17,7 +23,10 @@ interface ProductFormatted extends Product {
 }
 
 const Cart = (): JSX.Element => {
-  const { cart, updateProductAmount, removeProduct } = useCart();
+  const { cart, updateProductAmount, removeProduct, clearCart } = useCart();
+  const history = useHistory();
+
+  const [loadingCheckout, setLoadingCheckout] = useState(false);
 
   const cartFormatted: ProductFormatted[] = cart.map(product => ({
     ...product,
@@ -47,6 +56,35 @@ const Cart = (): JSX.Element => {
 
   function handleRemoveProduct(productId: number): void {
     removeProduct(productId);
+  }
+
+  async function handleCheckoutCart(): Promise<void> {
+    setLoadingCheckout(true);
+
+    const config = {
+      headers: {
+        token: '',
+      },
+    };
+
+    const body = {
+      products: cart.map((product: Product) => {
+        return {
+          productId: product.id,
+          quantity: product.amount,
+        };
+      }),
+    };
+
+    const response = await api.post('/carts', body, config);
+
+    if (response.status === 200) {
+      clearCart();
+      toast.success('Compra realizada com sucesso!!');
+
+      setLoadingCheckout(false);
+      history.push('');
+    }
   }
 
   return (
@@ -115,7 +153,15 @@ const Cart = (): JSX.Element => {
       </ProductTable>
 
       <footer>
-        <button type="button">Finalizar pedido</button>
+        <CheckoutButton
+          type="button"
+          disabled={cart.length === 0}
+          onClick={handleCheckoutCart}
+        >
+          Finalizar pedido
+        </CheckoutButton>
+
+        {loadingCheckout && <CircularProgress />}
 
         <Total>
           <span>TOTAL</span>
