@@ -2,28 +2,28 @@ import styled from 'styled-components';
 import { darken, lighten } from 'polished';
 
 export const Container = styled.div`
-  padding: 30px;
-  background: #fff;
+  padding: 3rem;
+  background: var(--color-white);
   border-radius: 4px;
 
   footer {
-    margin-top: 30px;
+    margin-top: 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     button {
-      background: #7159c1;
-      color: #fff;
+      background: var(--color-success);
+      color: var(--color-white);
       border: 0;
       border-radius: 4px;
-      padding: 12px 20px;
+      padding: 1.2rem 2rem;
       font-weight: bold;
       text-transform: uppercase;
       transition: background 0.2s;
 
       &:hover {
-        background: ${darken(0.06, '#7159c1')};
+        background: ${darken(0.06, '#109E41')};
       }
     }
   }
@@ -33,29 +33,29 @@ export const ProductTable = styled.table`
   width: 100%;
 
   thead th {
-    color: #999;
+    color: var(--color-secondary);
     text-align: left;
-    padding: 12px;
+    padding: 1.2rem;
   }
 
   tbody td {
-    padding: 12px;
+    color: var(--color-text-primary);
+    padding: 1.2rem;
     border-bottom: 1px solid #eee;
   }
 
   img {
-    height: 100px;
+    height: 10rem;
   }
 
   strong {
-    color: #333;
     display: block;
   }
 
   span {
     display: block;
-    margin-top: 5px;
-    font-size: 18px;
+    margin-top: 0.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
   }
 
@@ -64,33 +64,32 @@ export const ProductTable = styled.table`
     align-items: center;
 
     input {
-      border: 1px solid #ddd;
+      border: 1px solid var(--color-divider);
       border-radius: 4px;
-      color: #666;
-      padding: 6px;
-      width: 50px;
+      padding: 0.6rem;
+      width: 5rem;
     }
   }
 
   button {
     background: none;
     border: 0;
-    padding: 6px;
+    padding: 0.6rem;
 
     svg {
-      color: #7159c1;
+      color: var(--color-primary);
       transition: color 0.2s;
     }
 
     &:hover {
       svg {
-        color: ${darken(0.06, '#7159c1')};
+        color: ${darken(0.06, '#FF9000')};
       }
     }
 
     &:disabled {
       svg {
-        color: ${lighten(0.25, '#7159c1')};
+        color: ${lighten(0.25, '#FF9000')};
         cursor: not-allowed;
       }
     }
@@ -107,7 +106,7 @@ export const Total = styled.div`
   }
 
   strong {
-    font-size: 28px;
-    margin-left: 5px;
+    font-size: 2.8rem;
+    margin-left: 0.5rem;
   }
 `;

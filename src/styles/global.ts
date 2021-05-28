@@ -5,8 +5,11 @@ export default createGlobalStyle`
   :root {
     --color-primary: #FF9000;
     --color-primary-light: rgba(255, 144, 0, 0.2);
+    --color-secondary: #C81414;
     --color-text-primary: #4B4B62;
     --color-white: #FFFFFF;
+    --color-success: #109E41;
+    --color-divider: #dddddd;
   }
 
   html {
@@ -23,9 +26,9 @@ export default createGlobalStyle`
   body {
     background: radial-gradient(circle, #3A4B62 10%, #4B4B62 100%);
 
-    /* background: var(--teste); */
-    color: #000000;
+    color: var(--color-text-primary);
     -webkit-font-smoothing: antialiased;
+    padding-bottom: 3rem;
   }
 
   body, input, button {
