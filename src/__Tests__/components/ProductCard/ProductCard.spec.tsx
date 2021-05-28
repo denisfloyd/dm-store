@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import ProductCard from '../../../components/ProductCard';
 import { Product } from '../../../types';
@@ -43,7 +43,9 @@ describe('ProductCard component', () => {
       />,
     );
 
-    console.log(debug);
+    screen.logTestingPlaygroundURL();
+
+    debug();
 
     expect(true).toBeTruthy();
   });
