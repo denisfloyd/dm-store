@@ -12,7 +12,7 @@ export const Container = styled.div`
 export const FormLogin = styled.form`
   width: 50rem;
   background-color: #434458;
-  border-radius: .7rem;
+  border-radius: 0.7rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,25 +28,26 @@ export const FormLogin = styled.form`
       position: absolute;
       top: 2.5rem;
       left: 1rem;
-      transition: .3s;
+      transition: 0.3s;
       pointer-events: none;
     }
   }
 `;
 
 export const Input = styled.input`
-  background-color: #FFF;
+  background-color: #fff;
   width: 100%;
   height: 4rem;
-  border-radius: .7rem;
+  border-radius: 0.7rem;
   border: none;
   margin: 1.5rem 0;
   padding: 0 1rem;
 
-  &:focus ~ label, &:valid ~ label {
-    top: -.5rem;
+  &:focus ~ label,
+  &:valid ~ label {
+    top: -0.5rem;
     left: 0;
-    color: #FFF;
+    color: #fff;
   }
 `;
 
@@ -54,7 +55,7 @@ export const UserIcon = styled.div`
   width: 7rem;
   height: 7rem;
   border-radius: 50%;
-  background-color: #FFF;
+  background-color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -69,10 +70,10 @@ export const SignInButton = styled.button`
   margin-top: 2rem;
   border-radius: 2.5rem;
   background-color: transparent;
-  color: #FFF;
-  border: 2px solid #F19536;
+  color: #fff;
+  border: 2px solid #f19536;
 `;
 
 export const SignInButtonActive = styled(SignInButton)`
-  background-color: #F19536;
+  background-color: #f19536;
 `;

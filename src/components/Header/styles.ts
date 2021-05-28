@@ -19,7 +19,7 @@ export const ContainerOptions = styled.div`
 
   .user-logged {
     display: flex;
-    color: #FFF;
+    color: #fff;
     font-weight: bold;
     align-items: center;
     font-size: 1.5rem;
@@ -29,15 +29,15 @@ export const ContainerOptions = styled.div`
       z-index: 3;
       height: 0;
       overflow: hidden;
-      background-color: #FFF;
-      animation: slide-logout .3s linear;
+      background-color: #fff;
+      animation: slide-logout 0.3s linear;
       display: none;
       position: absolute;
       right: 0;
       top: 4rem;
       width: 25rem;
-      border: solid 1px #F9B902;
-      border-radius: .5rem;
+      border: solid 1px #f9b902;
+      border-radius: 0.5rem;
 
       &-content {
         display: flex;
@@ -46,7 +46,7 @@ export const ContainerOptions = styled.div`
         padding: 1.5rem 1rem 1rem 1rem;
 
         strong {
-          color: #494B62;
+          color: #494b62;
           font-size: 1.5rem;
         }
       }
@@ -76,10 +76,9 @@ export const ContainerOptions = styled.div`
         height: 6rem;
       }
     }
-
   }
 
-  @media(max-width: 800px) {
+  @media (max-width: 800px) {
     display: none;
   }
 `;
@@ -102,7 +101,7 @@ export const Cart = styled(Link)`
   }
 
   .cart-label {
-    color: #494B62;
+    color: #494b62;
     font-size: 1.5rem;
   }
 
@@ -110,15 +109,15 @@ export const Cart = styled(Link)`
     z-index: 3;
     height: 0;
     overflow: hidden;
-    background-color: #FFF;
-    animation: slide-cart .3s linear;
+    background-color: #fff;
+    animation: slide-cart 0.3s linear;
     display: none;
     position: absolute;
     right: 0;
     top: 4rem;
     width: 30rem;
-    border: solid 1px #F9B902;
-    border-radius: .5rem;
+    border: solid 1px #f9b902;
+    border-radius: 0.5rem;
 
     &-total {
       width: 100%;
@@ -137,9 +136,10 @@ export const Cart = styled(Link)`
         font-size: 2rem;
       }
 
-      span, strong {
+      span,
+      strong {
         font-weight: bold;
-        color: #494B62;
+        color: #494b62;
       }
     }
 
@@ -150,7 +150,7 @@ export const Cart = styled(Link)`
 
       a {
         text-decoration: none;
-        color: #F9B902;
+        color: #f9b902;
         font-weight: bold;
         font-size: 1.5rem;
       }
@@ -160,8 +160,8 @@ export const Cart = styled(Link)`
       display: flex;
       width: 90%;
       margin: 2rem auto;
-      padding-bottom: .5rem;
-      border-bottom: 1px solid #F9B902;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #f9b902;
 
       img {
         width: 6rem;
@@ -180,18 +180,18 @@ export const Cart = styled(Link)`
       &-title {
         font-weight: bold;
         font-size: 1.5rem;
-        color: #494B62;
+        color: #494b62;
       }
 
       &-total {
         display: flex;
         align-items: flex-end;
         font-size: 1.5rem;
-        color: #494B62;
+        color: #494b62;
 
         strong {
-          color: #494B62;
-          margin-left: .5rem;
+          color: #494b62;
+          margin-left: 0.5rem;
           font-size: 1.7rem;
         }
       }
@@ -222,7 +222,7 @@ export const Cart = styled(Link)`
     }
   }
 
-  @media(max-width: 800px) {
+  @media (max-width: 800px) {
     margin-right: 0;
   }
 
@@ -243,19 +243,19 @@ export const BadgeCart = styled.div`
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background-color: #F9B902;
+  background-color: #f9b902;
   position: absolute;
   right: -1.5rem;
-  top: -.5rem;
+  top: -0.5rem;
 `;
 
 export const LogoTitle = styled.span`
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Londrina Solid', sans-serif;
   font-size: 5rem;
   margin-left: 1rem;
-  color: #FFF;
+  color: #fff;
 
-  @media(max-width: 800px) {
+  @media (max-width: 800px) {
     font-size: 3rem;
   }
 `;
@@ -277,7 +277,7 @@ export const Favorites = styled(Link)`
   div {
     display: flex;
     align-items: center;
-    color: #494B62;
+    color: #494b62;
     font-size: 1.5rem;
     font-weight: bold;
     padding: 0 1rem;
@@ -304,11 +304,11 @@ export const DropdownSignIn = styled(SignIn)`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #494B62;
+    background-color: #494b62;
   }
 
   strong {
-    color: #494B62;
+    color: #494b62;
     margin-left: 1rem;
     font-size: 1.5rem;
   }
@@ -317,7 +317,7 @@ export const DropdownSignIn = styled(SignIn)`
 export const DropdownDivider = styled.div`
   width: 90%;
   margin: auto;
-  border-top: 1px solid #F9B902;
+  border-top: 1px solid #f9b902;
 `;
 
 export const Menu = styled.div`
@@ -327,16 +327,17 @@ export const Menu = styled.div`
     z-index: 3;
     height: 0;
     overflow: hidden;
-    background-color: #FFF;
-    animation: slide .3s linear;
+    background-color: #fff;
+    animation: slide 0.3s linear;
     display: none;
     position: absolute;
     right: 0;
     width: 25rem;
-    border: solid 1px #F9B902;
-    border-radius: .5rem;
+    border: solid 1px #f9b902;
+    border-radius: 0.5rem;
 
-    a, div {
+    a,
+    div {
       transition: opacity 0.2s;
 
       &:hover {
@@ -349,8 +350,7 @@ export const Menu = styled.div`
     display: flex;
     align-items: center;
     padding: 2rem 0 0 1.5rem;
-    color: #494B62;
-
+    color: #494b62;
 
     strong {
       margin-left: 1rem;
@@ -377,7 +377,7 @@ export const Menu = styled.div`
     }
   }
 
-  @media(max-width: 800px) {
+  @media (max-width: 800px) {
     display: block;
   }
 `;

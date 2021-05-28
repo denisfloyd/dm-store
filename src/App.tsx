@@ -15,7 +15,7 @@ import { AuthProvider } from './hooks/useAuth';
 const DisplayHeader: React.FC = (): JSX.Element | null => {
   const location = useLocation();
   return location.pathname !== '/login' ? <Header /> : null;
-}
+};
 
 const App = (): JSX.Element => {
   return (
@@ -23,7 +23,6 @@ const App = (): JSX.Element => {
       <Suspense fallback={<div>Loading app...</div>}>
         <AuthProvider>
           <CartProvider>
-            <GlobalStyles />
             <DisplayHeader />
             <FavoritesProvider>
               <Routes />
@@ -32,6 +31,7 @@ const App = (): JSX.Element => {
           </CartProvider>
         </AuthProvider>
       </Suspense>
+      <GlobalStyles />
     </BrowserRouter>
   );
 };

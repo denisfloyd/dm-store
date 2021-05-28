@@ -1,5 +1,7 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+
+import Route from './Route';
 
 const Routes = (): JSX.Element => {
   const DashboardComponent = React.lazy(() => import('../pages/Dashboard'));
@@ -8,10 +10,11 @@ const Routes = (): JSX.Element => {
 
   return (
     <Switch>
-      <Route path="/" exact component={DashboardComponent} key="dashboard" />
+      <Route exact path="/" component={DashboardComponent} key="dashboard" />
       <Route path="/login" component={LoginComponent} key="login" />
       <Route
         path="/favorites"
+        isPrivate
         component={() => <DashboardComponent favorites />}
         key="favorites"
       />
