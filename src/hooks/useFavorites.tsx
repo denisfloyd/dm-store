@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
-interface CartProviderProps {
+interface FavoritesProviderProps {
   children: ReactNode;
 }
 
@@ -16,7 +16,7 @@ const FavoriteContext = createContext<FavoriteContextData>(
 
 export function FavoritesProvider({
   children,
-}: CartProviderProps): JSX.Element {
+}: FavoritesProviderProps): JSX.Element {
   const [favorites, setFavorites] = useState<number[]>(() => {
     const favoritesStorage = localStorage.getItem('@dmstore:favorites');
 

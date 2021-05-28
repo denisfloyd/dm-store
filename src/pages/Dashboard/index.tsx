@@ -16,6 +16,7 @@ import {
 } from './styles';
 
 import { useCart } from '../../hooks/useCart';
+import { FavoritesProvider } from '../../hooks/useFavorites';
 
 interface CartItemsAmount {
   [key: number]: number;
@@ -89,7 +90,7 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <>
+    <FavoritesProvider>
       <SelectContainer variant="filled">
         <InputLabelSelect id="category-select-label">
           Categoria
@@ -128,7 +129,7 @@ const Dashboard: React.FC = () => {
             ))}
         </ProductList>
       )}
-    </>
+    </FavoritesProvider>
   );
 };
 

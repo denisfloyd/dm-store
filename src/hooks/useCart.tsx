@@ -6,11 +6,16 @@ interface CartProviderProps {
   children: ReactNode;
 }
 
+interface UpdateProductAmount {
+  productId: number;
+  amount: number;
+}
+
 interface CartContextData {
   cart: Product[];
   addProduct: (product: Product) => Promise<void>;
+  updateProductAmount: ({ productId, amount }: UpdateProductAmount) => void;
   removeProduct: (productId: number) => void;
-  // updateProductAmount: ({ productId, amount }: UpdateProductAmount) => void;
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData);
@@ -72,11 +77,42 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     }
   };
 
+  const updateProductAmount = async ({
+    productId,
+    amount: newAmount,
+  }: UpdateProductAmount): Promise<void> => {
+    try {
+      if (newAmount <= 0) {
+        return;
+      }
+
+      const currentCartToUpdate = [...cart];
+      const productExists = currentCartToUpdate.find(
+        product => product.id === productId,
+      );
+
+      if (productExists) {
+        productExists.amount = newAmount;
+
+        setCart(currentCartToUpdate);
+        localStorage.setItem(
+          '@dmstore:cart',
+          JSON.stringify(currentCartToUpdate),
+        );
+      } else {
+        throw new Error();
+      }
+    } catch {
+      toast.error('Erro na alteração de quantidade do produto!');
+    }
+  };
+
   return (
     <CartContext.Provider
       value={{
         cart,
         addProduct,
+        updateProductAmount,
         removeProduct,
       }}
     >
