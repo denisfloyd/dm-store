@@ -3,16 +3,27 @@ import { MdAddShoppingCart } from 'react-icons/md';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';
 import { Product } from '../../types';
 
-import { Container, AddToCardButton, FavoriteContainer } from './styles';
 import { useCart } from '../../hooks/useCart';
 import { useFavorites } from '../../hooks/useFavorites';
+
+import {
+  Container,
+  Content,
+  AddToCardButton,
+  FavoriteContainer,
+} from './styles';
 
 interface ProductCardProps {
   product: Product;
   amountInCart: number;
+  seeProductDetail: ((product: Product) => void) | null;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, amountInCart }) => {
+const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+  amountInCart,
+  seeProductDetail,
+}) => {
   const { addProduct: addProductToCart } = useCart();
   const { favorites, addProductToFavorites } = useFavorites();
 
@@ -26,7 +37,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, amountInCart }) => {
 
   return (
     <Container>
-      <img src={product.image} alt={String(product.title)} />
       <FavoriteContainer onClick={() => handleProductFavorite(product.id)}>
         {favorites.includes(product.id) ? (
           <AiFillHeart size={24} color="#FF6666" />
@@ -35,8 +45,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, amountInCart }) => {
         )}
       </FavoriteContainer>
 
-      <strong>{product.title}</strong>
-      <span>{product.priceFormatted}</span>
+      <Content
+        isAbleToSeeDetail={!!seeProductDetail}
+        onClick={() => {
+          seeProductDetail && seeProductDetail(product);
+        }}
+      >
+        <img src={product.image} alt={String(product.title)} />
+        <div>
+          <strong>{product.title}</strong>
+          <span>{product.priceFormatted}</span>
+        </div>
+      </Content>
+
       <AddToCardButton
         type="button"
         data-testid="add-product-button"

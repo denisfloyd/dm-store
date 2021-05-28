@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { CircularProgress, MenuItem } from '@material-ui/core';
 
 import { api } from '../../api/api';
@@ -17,6 +17,7 @@ import {
 
 import { useCart } from '../../hooks/useCart';
 import { useFavorites } from '../../hooks/useFavorites';
+import ModalProductDetail from '../../components/ModalProductDetail';
 
 interface CartItemsAmount {
   [key: number]: number;
@@ -38,6 +39,9 @@ const Dashboard: React.FC<DashboardProps> = ({
 
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [selectProduct, setSelectProduct] = useState<Product>({} as Product);
+
   const cartItemsAmount = cart.reduce((sumAmount, product) => {
     return { ...sumAmount, [product.id]: product.amount };
   }, {} as CartItemsAmount);
@@ -52,21 +56,15 @@ const Dashboard: React.FC<DashboardProps> = ({
     loadCategories();
   }, []);
 
-  useEffect(() => {
-    async function loadProducts(): Promise<void> {
-      const selectedCategoryFilter =
-        selectedCategory !== '' ? `/category/${selectedCategory}` : '';
-
-      const response = (await api(`products${selectedCategoryFilter}`))
-        .data as Product[];
-
+  const filterAndFormatProductData = useCallback(
+    (productsFromApi: Product[]) => {
       let productFormatted: Product[] = isFavoritePage
         ? [
-            ...response.filter(product => {
+            ...productsFromApi.filter(product => {
               return favorites.includes(product.id);
             }),
           ]
-        : [...response];
+        : [...productsFromApi];
 
       productFormatted = [
         ...productFormatted.map(product => {
@@ -78,11 +76,25 @@ const Dashboard: React.FC<DashboardProps> = ({
       ];
 
       setProducts(productFormatted);
+    },
+    [favorites, isFavoritePage],
+  );
+
+  useEffect(() => {
+    async function loadProducts(): Promise<void> {
+      const selectedCategoryFilter =
+        selectedCategory !== '' ? `/category/${selectedCategory}` : '';
+
+      const response = (await api(`products${selectedCategoryFilter}`))
+        .data as Product[];
+
+      filterAndFormatProductData(response);
+
       setIsLoadingProducts(false);
     }
 
     loadProducts();
-  }, [isFavoritePage, selectedCategory]);
+  }, [isFavoritePage, selectedCategory, filterAndFormatProductData]);
 
   const handleFilterCategory = (event: any): void => {
     if (event.target.value !== selectedCategory) {
@@ -90,6 +102,15 @@ const Dashboard: React.FC<DashboardProps> = ({
       setSelectedCategory(event.target.value);
     }
   };
+
+  const toggleModal = (): void => {
+    setModalOpen(!modalOpen);
+  };
+
+  function handleSeeProductDetail(productSelected: Product): void {
+    setSelectProduct(productSelected);
+    setModalOpen(true);
+  }
 
   return (
     <>
@@ -117,6 +138,13 @@ const Dashboard: React.FC<DashboardProps> = ({
         </SelectContainer>
       )}
 
+      <ModalProductDetail
+        isOpen={modalOpen}
+        setIsOpen={toggleModal}
+        product={selectProduct}
+        productAmountInCart={cartItemsAmount[selectProduct.id]}
+      />
+
       {isLoadingProducts ? (
         <LoadingContainer>
           <CircularProgress />
@@ -129,6 +157,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                 key={product.id}
                 product={product}
                 amountInCart={cartItemsAmount[product.id]}
+                seeProductDetail={handleSeeProductDetail}
               />
             ))}
         </ProductList>

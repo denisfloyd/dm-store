@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
-import { FormControl, InputLabel, MenuItem, Select as SelectMaterial } from '@material-ui/core';
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select as SelectMaterial,
+} from '@material-ui/core';
 
 export const SelectContainer = styled(FormControl)`
   border: 1px solid var(--color-text-primary);
@@ -39,6 +44,8 @@ export const SelectContainer = styled(FormControl)`
 export const InputLabelSelect = styled(InputLabel)`
   font-size: 1.6rem !important;
   color: var(--color-white) !important;
+
+  z-index: 0 !important;
 `;
 
 export const Select = styled(SelectMaterial)`
@@ -51,7 +58,7 @@ export const Select = styled(SelectMaterial)`
   }
 `;
 
-export const SelectMenuIcon = styled(MenuItem)``
+export const SelectMenuIcon = styled(MenuItem)``;
 
 export const ProductList = styled.ul`
   display: grid;
@@ -59,15 +66,15 @@ export const ProductList = styled.ul`
   grid-gap: 2rem;
   list-style: none;
 
-  @media(max-width: 1100px) {
+  @media (max-width: 1100px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media(max-width: 800px) {
+  @media (max-width: 800px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media(max-width: 500px) {
+  @media (max-width: 500px) {
     grid-template-columns: repeat(1, 1fr);
   }
 `;
