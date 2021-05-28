@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Container = styled.header`
   display: flex;
@@ -15,9 +15,10 @@ export const Container = styled.header`
   }
 `;
 
-export const ContainerLogo = styled.div`
+export const ContainerLogo = styled(Link)`
   display: flex;
   align-items: center;
+  text-decoration: none;
 `;
 
 export const ContainerOptions = styled.div`
@@ -88,8 +89,8 @@ export const BadgeCart = styled.div`
 `;
 
 export const LogoTitle = styled.span`
-  font-family: 'Londrina Solid', cursive;
-  font-size: 6rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 5rem;
   margin-left: 1rem;
   color: #FFF;
 
@@ -98,8 +99,9 @@ export const LogoTitle = styled.span`
   }
 `;
 
-export const SignIn = styled.a`
+export const SignIn = styled(Link)`
   display: block;
+  text-decoration: none
 
   &:hover {
     cursor: pointer;

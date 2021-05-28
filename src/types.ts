@@ -9,3 +9,9 @@ export interface Product {
 
   favorite?: boolean,
 }
+
+export interface User {
+  email: string,
+  password: string,
+  name: string,
+}

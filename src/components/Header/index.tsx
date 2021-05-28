@@ -25,7 +25,7 @@ const PrimaryMenuContent = (props: { items: number }): JSX.Element => {
             <MdShoppingCart size={36} color="#FFF" />
           </div>
         </Cart>
-        <SignIn>
+        <SignIn to="/login">
           <MdPerson size={36} color="#FFF" />
         </SignIn>
     </ContainerOptions>
@@ -39,10 +39,7 @@ const Header = (): JSX.Element => {
 
   return (
     <Container>
-      {/* <Link to="/">
-        <img src={logo} alt="Rocketshoes" />
-      </Link> */}
-      <ContainerLogo>
+      <ContainerLogo to="/">
         <img src={logo} alt="DM-Store" />
         <LogoTitle>DM-STORE</LogoTitle>
       </ContainerLogo>
@@ -51,7 +48,7 @@ const Header = (): JSX.Element => {
       <Menu>
         <MdMenu size={36} color="#FFF"></MdMenu>
         <div>
-          <DropdownSignIn>
+          <DropdownSignIn to="/login">
             <div>
               <MdPerson size={36} color="#FFF" />
             </div>
