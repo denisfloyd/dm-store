@@ -4,8 +4,9 @@ import 'react-toastify/dist/ReactToastify.css';
 export default createGlobalStyle`
   :root {
     --color-primary: #FF9000;
+    --color-primary-light: rgba(255, 144, 0, 0.2);
     --color-text-primary: #4B4B62;
-    --color-white: #FFFFFF
+    --color-white: #FFFFFF;
   }
 
   html {

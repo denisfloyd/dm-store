@@ -11,7 +11,7 @@ interface CartProviderProps {
 interface CartContextData {
   cart: Product[];
   favorites: number[];
-  addProduct: (productId: number) => Promise<void>;
+  addProduct: (product: Product) => Promise<void>;
   removeProduct: (productId: number) => void;
   // updateProductAmount: ({ productId, amount }: UpdateProductAmount) => void;
   addProductToFavorites: (id: number) => boolean;
@@ -40,12 +40,19 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     return [];
   });
 
-  const addProduct = async (productId: number) => {
+  const addProduct = async (productToAddToCart: Product) => {
     try {
       const currentCartToUpdate = [...cart];
       const productExists = currentCartToUpdate.find(
-        (product) => product.id === productId
+        (product) => product.id === productToAddToCart.id
       );
+
+      if (productExists) {
+        productExists.amount = productExists.amount + 1;
+      } else {
+        const productToAdd = { ...productToAddToCart, amount: 1 };
+        currentCartToUpdate.push(productToAdd);
+      }
 
       setCart(currentCartToUpdate);
       localStorage.setItem(

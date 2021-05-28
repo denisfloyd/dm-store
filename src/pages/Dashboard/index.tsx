@@ -17,8 +17,12 @@ from './styles';
 
 import { useCart } from '../../hooks/useCart';
 
+interface CartItemsAmount {
+  [key: number]: number;
+}
+
 const Dashboard: React.FC = () => {
-  const { favorites, addProduct: addProductToCart, addProductToFavorites } = useCart();
+  const { cart, favorites, addProductToFavorites } = useCart();
 
   const [categories, setCategories] = useState<string[]>();
   const [products, setProducts] = useState<Product[]>([]);
@@ -26,6 +30,9 @@ const Dashboard: React.FC = () => {
 
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
+  const cartItemsAmount = cart.reduce((sumAmount, product) => {
+    return { ...sumAmount, [product.id]: product.amount };
+  }, {} as CartItemsAmount);
 
   useEffect(() => {
     async function loadCategories() {
@@ -58,10 +65,6 @@ const Dashboard: React.FC = () => {
 
     loadProducts();
   }, [selectedCategory]);
-
-  // function handleAddProduct(id: number) {
-  //   addProduct(id);
-  // }
 
   function handleProductFavorite(id: number, productIndex: number) {
     const result = addProductToFavorites(id);
@@ -109,6 +112,7 @@ const Dashboard: React.FC = () => {
               <ProductCard
                 key={product.id}
                 product={product}
+                amountInCart={cartItemsAmount[product.id]}
                 addProductToFavorites={() => handleProductFavorite(product.id, index)}
               />
             ))}

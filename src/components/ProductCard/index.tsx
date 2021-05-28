@@ -9,11 +9,18 @@ import { useCart } from '../../hooks/useCart';
 interface ProductCardProps {
   product: Product;
   addProductToFavorites: () => void;
+  amountInCart: number;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, addProductToFavorites }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, addProductToFavorites, amountInCart }) => {
+  const { addProduct: addProductToCart } = useCart();
+
   function handleProductFavorite() {
     addProductToFavorites()
+  }
+
+  function handleAddProduct(product: Product) {
+    addProductToCart(product);
   }
 
   return (
@@ -34,11 +41,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, addProductToFavorite
       <AddToCardButton
         type="button"
         data-testid="add-product-button"
-        // onClick={() => handleAddProduct(product.id)}
+        onClick={() => handleAddProduct(product)}
       >
         <div data-testid="cart-product-quantity">
           <MdAddShoppingCart size={16} color="#FFF" />
-          {/* {cartItemsAmount[product.id] || 0} */}
+          {amountInCart || 0}
         </div>
 
         <span>ADICIONAR AO CARRINHO</span>

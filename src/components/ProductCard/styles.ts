@@ -59,8 +59,11 @@ export const AddToCardButton = styled.button`
     display: flex;
     align-items: center;
     padding: 1.2rem;
+    font-size: 1.6rem;
+    background-color: var(--color-primary-light);
 
     svg {
+      margin-right: 0.3rem;
       color: var(--color-text-primary) !important
     }
   }
