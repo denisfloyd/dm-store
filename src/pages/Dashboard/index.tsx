@@ -16,14 +16,21 @@ import {
 } from './styles';
 
 import { useCart } from '../../hooks/useCart';
-import { FavoritesProvider } from '../../hooks/useFavorites';
+import { useFavorites } from '../../hooks/useFavorites';
 
 interface CartItemsAmount {
   [key: number]: number;
 }
 
-const Dashboard: React.FC = () => {
+interface DashboardProps {
+  favorites?: boolean;
+}
+
+const Dashboard: React.FC<DashboardProps> = ({
+  favorites: isFavoritePage = false,
+}) => {
   const { cart } = useCart();
+  const { favorites } = useFavorites();
 
   const [categories, setCategories] = useState<string[]>();
   const [products, setProducts] = useState<Product[]>([]);
@@ -53,34 +60,29 @@ const Dashboard: React.FC = () => {
       const response = (await api(`products${selectedCategoryFilter}`))
         .data as Product[];
 
-      setProducts([
-        ...response.map(product => {
-          // const isFavoriteProduct = favorites.find(
-          //   (favorite: number) => favorite === product.id,
-          // );
+      let productFormatted: Product[] = isFavoritePage
+        ? [
+            ...response.filter(product => {
+              return favorites.includes(product.id);
+            }),
+          ]
+        : [...response];
+
+      productFormatted = [
+        ...productFormatted.map(product => {
           return {
             ...product,
             priceFormatted: formatPrice(product.price),
-            // favorite: !!isFavoriteProduct,
           };
         }),
-      ]);
+      ];
 
+      setProducts(productFormatted);
       setIsLoadingProducts(false);
     }
 
     loadProducts();
-  }, [selectedCategory]);
-
-  // function handleProductFavorite(id: number, productIndex: number): void {
-  //   const result = addProductToFavorites(id);
-  //   if (result) {
-  //     const updatedProducts = [...products];
-  //     updatedProducts[productIndex].favorite =
-  //       !updatedProducts[productIndex].favorite;
-  //     setProducts(updatedProducts);
-  //   }
-  // }
+  }, [isFavoritePage, selectedCategory]);
 
   const handleFilterCategory = (event: any): void => {
     if (event.target.value !== selectedCategory) {
@@ -90,28 +92,30 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <FavoritesProvider>
-      <SelectContainer variant="filled">
-        <InputLabelSelect id="category-select-label">
-          Categoria
-        </InputLabelSelect>
-        <Select
-          labelId="category-select"
-          id="category-select"
-          value={selectedCategory}
-          onChange={handleFilterCategory}
-        >
-          <MenuItem value="">
-            <em>Todas</em>
-          </MenuItem>
-          {categories &&
-            categories.map(category => (
-              <SelectMenuIcon key={category} value={category}>
-                {category}
-              </SelectMenuIcon>
-            ))}
-        </Select>
-      </SelectContainer>
+    <>
+      {!isFavoritePage && (
+        <SelectContainer variant="filled">
+          <InputLabelSelect id="category-select-label">
+            Categoria
+          </InputLabelSelect>
+          <Select
+            labelId="category-select"
+            id="category-select"
+            value={selectedCategory}
+            onChange={handleFilterCategory}
+          >
+            <MenuItem value="">
+              <em>Todas</em>
+            </MenuItem>
+            {categories &&
+              categories.map(category => (
+                <SelectMenuIcon key={category} value={category}>
+                  {category}
+                </SelectMenuIcon>
+              ))}
+          </Select>
+        </SelectContainer>
+      )}
 
       {isLoadingProducts ? (
         <LoadingContainer>
@@ -129,7 +133,7 @@ const Dashboard: React.FC = () => {
             ))}
         </ProductList>
       )}
-    </FavoritesProvider>
+    </>
   );
 };
 

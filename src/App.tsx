@@ -6,7 +6,9 @@ import { ToastContainer } from 'react-toastify';
 import GlobalStyles from './styles/global';
 
 import Header from './components/Header';
+
 import { CartProvider } from './hooks/useCart';
+import { FavoritesProvider } from './hooks/useFavorites';
 import Routes from './routes';
 
 const App = (): JSX.Element => {
@@ -16,7 +18,9 @@ const App = (): JSX.Element => {
         <CartProvider>
           <GlobalStyles />
           <Header />
-          <Routes />
+          <FavoritesProvider>
+            <Routes />
+          </FavoritesProvider>
           <ToastContainer autoClose={3000} />
         </CartProvider>
       </Suspense>

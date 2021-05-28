@@ -8,7 +8,11 @@ const Routes = (): JSX.Element => {
   return (
     <Switch>
       <Route path="/" exact component={DashboardComponent} key="dashboard" />
-      <Route path="/favorites" component={DashboardComponent} key="favorites" />
+      <Route
+        path="/favorites"
+        component={() => <DashboardComponent favorites />}
+        key="favorites"
+      />
       <Route path="/cart" component={CartComponent} />
     </Switch>
   );
