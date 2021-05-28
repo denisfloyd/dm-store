@@ -165,6 +165,8 @@ export const Cart = styled(Link)`
 
       img {
         width: 6rem;
+        height: 6rem;
+        object-fit: contain;
       }
 
       div {

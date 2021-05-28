@@ -47,7 +47,7 @@ const ProductCartDropdown: React.FC<ProductCartDropdown> = ({ products }): JSX.E
               <div className="product">
                 <img src={product.image} alt="Produto" />
                 <div>
-                  <span className="product-title">{product.title}</span>
+                  <span className="product-title">{ product.title.length > 35 ? `${product.title.substring(0, 34)}...` : product.title}</span>
                   <span className="product-total">{product.amount} x <strong>{product.priceFormatted}</strong></span>
                 </div>
               </div>
@@ -67,8 +67,8 @@ const ProductCartDropdown: React.FC<ProductCartDropdown> = ({ products }): JSX.E
             <div className="product">
               <img src={product.image} alt="Produto" />
               <div>
-                <span>{product.title}</span>
-                <span>{product.amount} x <strong>{product.priceFormatted}</strong></span>
+                <span className="product-title">{ product.title.length > 35 ? `${product.title.substring(0, 34)}...` : product.title}</span>
+                <span className="product-total">{product.amount} x <strong>{product.priceFormatted}</strong></span>
               </div>
             </div>
           );
@@ -143,17 +143,20 @@ const PrimaryMenuContent: React.FC<PrimaryMenuContentProps> = ({ size, user, ite
           }
           <MdShoppingCart size={36} color="#FFF" />
         </div>
-        <div className="cart-dropdown">
-          <ProductCartDropdown products={items} />
-          <div className="cart-dropdown-total">
-            <span>TOTAL :</span>
-            <strong>
-              {
-                formatPrice(items.reduce((sum: number, item: Product) => sum + (item.price * item.amount), 0))
-              }
-            </strong>
+        {
+          items.length > 0 &&
+          <div className="cart-dropdown">
+            <ProductCartDropdown products={items} />
+            <div className="cart-dropdown-total">
+              <span>TOTAL :</span>
+              <strong>
+                {
+                  formatPrice(items.reduce((sum: number, item: Product) => sum + (item.price * item.amount), 0))
+                }
+              </strong>
+            </div>
           </div>
-        </div>
+        }
       </Cart>
       <Favorites to="/favorites">
         <MdFavorite size={36} color="#FFF" />
