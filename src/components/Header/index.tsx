@@ -72,7 +72,7 @@ const ProductCartDropdown: React.FC<ProductCartDropdown> = ({
       <>
         {products.map((product: Product) => {
           return (
-            <div className="product">
+            <div key={product.id} className="product">
               <img src={product.image} alt="Produto" />
               <div>
                 <span className="product-title">
@@ -81,9 +81,7 @@ const ProductCartDropdown: React.FC<ProductCartDropdown> = ({
                     : product.title}
                 </span>
                 <span className="product-total">
-                  {product.amount}
-{' '}
-x<strong>{product.priceFormatted}</strong>
+                  {product.amount} x<strong>{product.priceFormatted}</strong>
                 </span>
               </div>
             </div>
@@ -105,7 +103,7 @@ const UserComponent: React.FC<UserComponentProps> = ({
   if (context === 'mobile') {
     if (user) {
       return (
-        <div className="logout" onClick={logout}>
+        <div data-testid="logout" className="logout" onClick={logout}>
           <div>
             <GoSignOut size={34} color="#494B62" />
           </div>
@@ -127,7 +125,7 @@ const UserComponent: React.FC<UserComponentProps> = ({
     return (
       <div className="user-logged">
         {user.username}
-        <div className="logout" onClick={() => logout()}>
+        <div data-testid="logout" className="logout" onClick={logout}>
           <div className="logout-content">
             <div>
               <GoSignOut size={34} color="#494B62" />
@@ -158,7 +156,7 @@ const PrimaryMenuContent: React.FC<PrimaryMenuContentProps> = ({
         </div>
         <div className="cart-icon">
           {size > 0 && <BadgeCart>{size}</BadgeCart>}
-          <MdShoppingCart size={36} color="#FFF" />
+          <MdShoppingCart size={36} color="#FFFFFF" />
         </div>
         {items.length > 0 && (
           <div className="cart-dropdown">
@@ -179,7 +177,7 @@ const PrimaryMenuContent: React.FC<PrimaryMenuContentProps> = ({
         )}
       </Cart>
       <Favorites to="/favorites">
-        <MdFavorite size={36} color="#FFF" />
+        <MdFavorite size={36} color="#FFFFFF" />
       </Favorites>
       <UserComponent user={user} context="screen" />
     </ContainerOptions>
@@ -199,14 +197,16 @@ const Header = (): JSX.Element => {
 
       <PrimaryMenuContent size={cart.length} user={user} items={cart} />
       <Menu>
-        <MdMenu size={36} color="#FFF" />
+        <MdMenu size={36} color="#FFFFFF" />
         <div>
           <UserComponent user={user} context="mobile" />
           <DropdownDivider />
-          <Cart to="/cart">
+          <Cart data-testid="cart-icon" to="/cart">
             <div className="cart-content">
               <div className="cart-icon">
-                {cart.length > 0 && <BadgeCart>{cart.length}</BadgeCart>}
+                {cart.length > 0 && (
+                  <BadgeCart data-testid="cart-size">{cart.length}</BadgeCart>
+                )}
                 <MdShoppingCart size={36} color="#494B62" />
               </div>
               <div>

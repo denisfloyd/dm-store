@@ -36,7 +36,7 @@ export const ContainerOptions = styled.div`
       right: 0;
       top: 4rem;
       width: 25rem;
-      border: solid 1px #f9b902;
+      border: solid 1px var(--color-yellow-logo);
       border-radius: 0.5rem;
 
       &-content {
@@ -46,7 +46,7 @@ export const ContainerOptions = styled.div`
         padding: 1.5rem 1rem 1rem 1rem;
 
         strong {
-          color: #494b62;
+          color: var(--color-text-primary);
           font-size: 1.5rem;
         }
       }
@@ -109,14 +109,14 @@ export const Cart = styled(Link)`
     z-index: 3;
     height: 0;
     overflow: hidden;
-    background-color: #fff;
+    background-color: var(--color-white);
     animation: slide-cart 0.3s linear;
     display: none;
     position: absolute;
     right: 0;
     top: 4rem;
     width: 30rem;
-    border: solid 1px #f9b902;
+    border: solid 0.5rem var(--color-yellow-logo);
     border-radius: 0.5rem;
 
     &-total {
@@ -273,11 +273,12 @@ export const Favorites = styled(Link)`
   display: block;
   text-decoration: none;
   margin-right: 2rem;
+  cursor: pointer;
 
   div {
     display: flex;
     align-items: center;
-    color: #494b62;
+    color: var(--color-text-primary);
     font-size: 1.5rem;
     font-weight: bold;
     padding: 0 1rem;
@@ -285,10 +286,6 @@ export const Favorites = styled(Link)`
     span {
       margin-left: 1rem;
     }
-  }
-
-  &:hover {
-    cursor: pointer;
   }
 `;
 
@@ -317,7 +314,7 @@ export const DropdownSignIn = styled(SignIn)`
 export const DropdownDivider = styled.div`
   width: 90%;
   margin: auto;
-  border-top: 1px solid #f9b902;
+  border-top: 1px solid var(--color - yellow - logo);
 `;
 
 export const Menu = styled.div`
@@ -327,13 +324,13 @@ export const Menu = styled.div`
     z-index: 3;
     height: 0;
     overflow: hidden;
-    background-color: #fff;
+    background-color: var(--color-white);
     animation: slide 0.3s linear;
     display: none;
     position: absolute;
     right: 0;
     width: 25rem;
-    border: solid 1px #f9b902;
+    border: solid 1px var(--color-yellow-logo);
     border-radius: 0.5rem;
 
     a,
@@ -350,7 +347,7 @@ export const Menu = styled.div`
     display: flex;
     align-items: center;
     padding: 2rem 0 0 1.5rem;
-    color: #494b62;
+    color: var(--color-text-primary);
 
     strong {
       margin-left: 1rem;

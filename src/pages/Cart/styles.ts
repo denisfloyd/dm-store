@@ -1,10 +1,11 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { darken, lighten } from 'polished';
 
 export const Container = styled.div`
   padding: 3rem;
   background: var(--color-white);
   border-radius: 4px;
+  margin-bottom: 3rem;
 
   footer {
     margin-top: 3rem;

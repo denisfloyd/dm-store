@@ -1,5 +1,4 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { api } from '../api/api';
 import { User } from '../types';
@@ -18,7 +17,6 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
-  const history = useHistory();
   const [user, setUser] = useState<User | null>(() => {
     const storedUser = localStorage.getItem('@dmstore:user');
     return storedUser ? JSON.parse(storedUser) : null;
@@ -44,7 +42,6 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
             '@dmstore:user',
             JSON.stringify({ username, token: data.token }),
           );
-          history.push('/');
         }
       })
       .catch((err: any) => toast.error('Erro ao autenticar usuário'));
@@ -57,7 +54,6 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   const logout = (): void => {
     localStorage.removeItem('@dmstore:user');
     setUser(null);
-    history.replace('');
   };
 
   return (

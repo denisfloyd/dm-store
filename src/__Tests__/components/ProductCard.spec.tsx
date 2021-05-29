@@ -1,11 +1,11 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 
-import ProductCard from '../../../components/ProductCard';
-import { Product } from '../../../types';
-import { useAuth } from '../../../hooks/useAuth';
+import ProductCard from '../../components/ProductCard';
+import { Product } from '../../types';
+import { useAuth } from '../../hooks/useAuth';
 
-jest.mock('../../../hooks/useCart', () => {
+jest.mock('../../hooks/useCart', () => {
   return {
     useCart: () => {
       return {
@@ -16,7 +16,7 @@ jest.mock('../../../hooks/useCart', () => {
   };
 });
 
-jest.mock('../../../hooks/useFavorites', () => {
+jest.mock('../../hooks/useFavorites', () => {
   return {
     useFavorites: () => {
       return {
@@ -27,8 +27,8 @@ jest.mock('../../../hooks/useFavorites', () => {
   };
 });
 
-const mockerUseAuth = useAuth as jest.Mock;
-jest.mock('../../../hooks/useAuth');
+const mockedUseAuth = useAuth as jest.Mock;
+jest.mock('../../hooks/useAuth');
 
 const product: Product = {
   amount: 1,
@@ -43,7 +43,7 @@ const product: Product = {
 
 describe('ProductCard component', () => {
   beforeEach(() => {
-    mockerUseAuth.mockReturnValue({
+    mockedUseAuth.mockReturnValue({
       user: {
         username: 'John Doe',
         token: 'fake-token',
@@ -73,8 +73,8 @@ describe('ProductCard component', () => {
     expect(image.src).toBe(product.image);
   });
 
-  it('should hide favorite icon when user is not authenticated', () => {
-    mockerUseAuth.mockReturnValueOnce({
+  it('should hide favorite icon when user is not authenticated', async () => {
+    mockedUseAuth.mockReturnValueOnce({
       user: null,
     });
 
@@ -89,7 +89,7 @@ describe('ProductCard component', () => {
       />,
     );
 
-    waitFor(
+    await waitFor(
       () => {
         expect(() => screen.getByTestId('favotite-container')).toThrow(
           'Unable to find an element',

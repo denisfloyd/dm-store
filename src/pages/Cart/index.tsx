@@ -16,6 +16,7 @@ import { Product } from '../../types';
 import { formatPrice } from '../../utils/format';
 
 import { Container, ProductTable, CheckoutButton, Total } from './styles';
+import { useAuth } from '../../hooks/useAuth';
 
 interface ProductFormatted extends Product {
   priceFormatted: string;
@@ -24,6 +25,8 @@ interface ProductFormatted extends Product {
 
 const Cart = (): JSX.Element => {
   const { cart, updateProductAmount, removeProduct, clearCart } = useCart();
+  const { user } = useAuth();
+
   const history = useHistory();
 
   const [loadingCheckout, setLoadingCheckout] = useState(false);
@@ -59,11 +62,16 @@ const Cart = (): JSX.Element => {
   }
 
   async function handleCheckoutCart(): Promise<void> {
+    if (!user) {
+      toast.warning('Para finalizar a compra é necessário realizar o Login!');
+      return;
+    }
+
     setLoadingCheckout(true);
 
     const config = {
       headers: {
-        token: '',
+        token: user.token,
       },
     };
 

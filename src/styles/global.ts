@@ -10,6 +10,7 @@ export default createGlobalStyle`
     --color-white: #FFFFFF;
     --color-success: #109E41;
     --color-divider: #dddddd;
+    --color-yellow-logo: #f9b902;
   }
 
   html {

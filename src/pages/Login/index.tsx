@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { MdPerson } from 'react-icons/md';
+import { useHistory } from 'react-router';
+
 import { ContainerLogo, LogoTitle } from '../../components/Header/styles';
 import {
   FormLogin,
@@ -22,9 +24,11 @@ const DisplayButton: React.FC<DisplayButtonProps> = ({
   password,
 }): JSX.Element => {
   const { authenticate } = useAuth();
+  const { goBack } = useHistory();
 
-  const handleAuthenticate = () => {
+  const handleAuthenticate = (): void => {
     authenticate(username, password);
+    goBack();
   };
 
   return username.length > 0 && password.length > 0 ? (
