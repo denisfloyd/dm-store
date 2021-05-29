@@ -1,11 +1,19 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import MockAdapter from 'axios-mock-adapter';
+import AxiosMock from 'axios-mock-adapter';
+import { toast } from 'react-toastify';
 import { useAuth, AuthProvider } from '../../hooks/useAuth';
 import { api } from '../../api/api';
 
-const apiMock = new MockAdapter(api);
+const apiMock = new AxiosMock(api);
+
+jest.mock('react-toastify');
+const mockedToastError = toast.error as jest.Mock;
 
 describe('useAuth hook', () => {
+  beforeEach(() => {
+    apiMock.reset();
+  });
+
   it('should be able to signin', async () => {
     const apiResponse = {
       username: 'John Doe',
@@ -20,7 +28,9 @@ describe('useAuth hook', () => {
       wrapper: AuthProvider,
     });
 
-    result.current.authenticate('John Doe', '123');
+    act(() => {
+      result.current.authenticate('John Doe', '123');
+    });
 
     await waitForNextUpdate();
 
@@ -32,6 +42,33 @@ describe('useAuth hook', () => {
       }),
     );
     expect(result.current.user?.username).toEqual('John Doe');
+  });
+
+  it('should not be able to signin with wrong user or password', async () => {
+    const apiResponse = {
+      status: 'Error',
+      msg: 'wrong username',
+    };
+
+    apiMock.onPost('/auth/login').reply(200, apiResponse);
+
+    const setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
+    setItemSpy.mockReset();
+
+    const { result, waitFor } = renderHook(() => useAuth(), {
+      wrapper: AuthProvider,
+    });
+
+    act(() => {
+      result.current.authenticate('John Doe', '123');
+    });
+
+    waitFor(() => {
+      expect(mockedToastError).toHaveBeenCalledWith(
+        'Erro ao autenticar usuário',
+      );
+      expect(setItemSpy).not.toHaveBeenCalled();
+    });
   });
 
   it('should restore saved data from storage when auth inits', () => {

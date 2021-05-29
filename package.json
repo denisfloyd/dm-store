@@ -25,10 +25,18 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
+    "test:coverage": "react-scripts test --env=jest-environment-jsdom-sixteen --coverage --watchAll",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/pages/**/*.tsx",
+      "src/components/**/*.tsx",
+      "src/hooks/**/*.tsx"
+    ]
   },
   "browserslist": {
     "production": [

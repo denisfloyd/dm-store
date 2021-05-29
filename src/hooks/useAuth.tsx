@@ -32,6 +32,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
         const { data } = res;
         if (data.status === 'Error') {
           if (data.msg.includes('username') || data.msg.includes('password')) {
+            console.log('error');
             toast.error('Usuário ou senha incorretos');
           } else {
             toast.error('Erro ao autenticar usuário');
