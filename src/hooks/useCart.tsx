@@ -13,7 +13,7 @@ interface UpdateProductAmount {
 
 interface CartContextData {
   cart: Product[];
-  addProduct: (product: Product) => Promise<void>;
+  addProduct: (product: Product) => void;
   updateProductAmount: ({ productId, amount }: UpdateProductAmount) => void;
   removeProduct: (productId: number) => void;
   clearCart: () => void;
@@ -32,7 +32,7 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     return [];
   });
 
-  const addProduct = async (productToAddToCart: Product): Promise<void> => {
+  const addProduct = (productToAddToCart: Product): void => {
     try {
       const currentCartToUpdate = [...cart];
       const productExists = currentCartToUpdate.find(
@@ -78,10 +78,10 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
     }
   };
 
-  const updateProductAmount = async ({
+  const updateProductAmount = ({
     productId,
     amount: newAmount,
-  }: UpdateProductAmount): Promise<void> => {
+  }: UpdateProductAmount): void => {
     try {
       if (newAmount <= 0) {
         return;
