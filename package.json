@@ -4,13 +4,11 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.4",
-    "@testing-library/jest-dom": "^5.12.0",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^7.1.2",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
-    "@types/react-router-dom": "^5.1.4",
-    "@types/styled-components": "^5.1.0",
     "axios": "^0.19.2",
     "polished": "^4.1.2",
     "react": "^16.13.1",
@@ -26,7 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -46,14 +44,16 @@
   },
   "devDependencies": {
     "@testing-library/dom": "^7.31.0",
+    "@testing-library/react-hooks": "^5.1.0",
     "@types/axios": "^0.14.0",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^12.0.0",
     "@types/react-icons": "^3.0.0",
     "@types/react-modal": "^3.12.0",
     "@types/react-router": "^5.1.14",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/styled-components": "^5.1.7",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.25.0",
+    "axios-mock-adapter": "^1.19.0",
     "babel-jest": "^24.9.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.2.1",
@@ -67,6 +67,8 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "24.9.0",
     "jest-dom": "^4.0.0",
-    "prettier": "^2.0.4"
+    "jest-environment-jsdom-sixteen": "^2.0.0",
+    "prettier": "^2.0.4",
+    "ts-jest": "^27.0.1"
   }
 }

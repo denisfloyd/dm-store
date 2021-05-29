@@ -1,45 +1,65 @@
-import React, { ImgHTMLAttributes } from 'react';
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
 
 import ProductCard from '../../../components/ProductCard';
 import { Product } from '../../../types';
+import { useAuth } from '../../../hooks/useAuth';
 
 jest.mock('../../../hooks/useCart', () => {
   return {
-    useCart: () => ({
-      addProduct: jest.fn(),
-      addProductToCart: jest.fn(),
-    }),
+    useCart: () => {
+      return {
+        cart: [],
+        addProduct: jest.fn(),
+      };
+    },
   };
 });
 
 jest.mock('../../../hooks/useFavorites', () => {
   return {
-    useFavorites: () => ({
-      favorites: [1, 2, 3],
-      addProductToFavorites: jest.fn(),
-    }),
+    useFavorites: () => {
+      return {
+        favorites: [1, 2, 5],
+        addProductToFavorites: jest.fn(),
+      };
+    },
   };
 });
 
+const mockerUseAuth = useAuth as jest.Mock;
+jest.mock('../../../hooks/useAuth');
+
+const product: Product = {
+  amount: 1,
+  category: 'electronics',
+  description: 'descrition test',
+  id: 1,
+  image: 'https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg',
+  price: 10,
+  priceFormatted: 'R$ 10,00',
+  title: 'Fake Product',
+};
+
 describe('ProductCard component', () => {
-  const product: Product = {
-    amount: 1,
-    category: 'electronics',
-    description: 'descrition test',
-    id: 1,
-    image: 'https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg',
-    price: 10,
-    priceFormatted: 'R$ 10,00',
-    title: 'Fake Product',
-  };
+  beforeEach(() => {
+    mockerUseAuth.mockReturnValue({
+      user: {
+        username: 'John Doe',
+        token: 'fake-token',
+      },
+    });
+  });
 
   it('it should render correctly', () => {
-    const { getByText, getByTestId, debug, getByAltText } = render(
+    const { getByText, getByTestId, getByAltText } = render(
       <ProductCard
         product={product}
         amountInCart={product.amount}
         seeProductDetail={null}
+        addProductToCart={() => {
+          return true;
+        }}
       />,
     );
 
@@ -51,5 +71,31 @@ describe('ProductCard component', () => {
 
     const image = getByAltText('Fake Product') as HTMLImageElement;
     expect(image.src).toBe(product.image);
+  });
+
+  it('should hide favorite icon when user is not authenticated', () => {
+    mockerUseAuth.mockReturnValueOnce({
+      user: null,
+    });
+
+    render(
+      <ProductCard
+        product={product}
+        amountInCart={product.amount}
+        seeProductDetail={null}
+        addProductToCart={() => {
+          return true;
+        }}
+      />,
+    );
+
+    waitFor(
+      () => {
+        expect(() => screen.getByTestId('favotite-container')).toThrow(
+          'Unable to find an element',
+        );
+      },
+      { timeout: 200 },
+    );
   });
 });

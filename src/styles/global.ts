@@ -28,7 +28,6 @@ export default createGlobalStyle`
 
     color: var(--color-text-primary);
     -webkit-font-smoothing: antialiased;
-    padding-bottom: 3rem;
   }
 
   body, input, button {

@@ -7,6 +7,7 @@ import { formatPrice } from '../../utils/format';
 
 import ProductCard from '../../components/ProductCard';
 import {
+  Container,
   SelectContainer,
   InputLabelSelect,
   Select,
@@ -30,7 +31,7 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({
   favorites: isFavoritePage = false,
 }) => {
-  const { cart } = useCart();
+  const { addProduct, cart } = useCart();
   const { favorites } = useFavorites();
 
   const [categories, setCategories] = useState<string[]>();
@@ -112,8 +113,12 @@ const Dashboard: React.FC<DashboardProps> = ({
     setModalOpen(true);
   }
 
+  function handleAddProductToCart(product: Product): void {
+    addProduct(product);
+  }
+
   return (
-    <>
+    <Container>
       {!isFavoritePage && (
         <SelectContainer variant="filled">
           <InputLabelSelect id="category-select-label">
@@ -143,6 +148,7 @@ const Dashboard: React.FC<DashboardProps> = ({
         setIsOpen={toggleModal}
         product={selectProduct}
         productAmountInCart={cartItemsAmount[selectProduct.id]}
+        addProductToCart={() => handleAddProductToCart(selectProduct)}
       />
 
       {isLoadingProducts ? (
@@ -158,11 +164,12 @@ const Dashboard: React.FC<DashboardProps> = ({
                 product={product}
                 amountInCart={cartItemsAmount[product.id]}
                 seeProductDetail={handleSeeProductDetail}
+                addProductToCart={() => handleAddProductToCart(product)}
               />
             ))}
         </ProductList>
       )}
-    </>
+    </Container>
   );
 };
 

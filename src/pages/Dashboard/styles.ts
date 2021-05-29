@@ -7,12 +7,16 @@ import {
   Select as SelectMaterial,
 } from '@material-ui/core';
 
+export const Container = styled.div`
+  padding: 2rem 0 4rem;
+`;
+
 export const SelectContainer = styled(FormControl)`
   border: 1px solid var(--color-text-primary);
   width: 170px;
   display: flex !important;
 
-  margin: 2rem auto !important;
+  margin: 0 auto 2rem !important;
 
   > p {
     font-size: 1.6rem;
