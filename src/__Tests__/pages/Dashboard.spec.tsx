@@ -5,6 +5,7 @@ import {
   render,
   screen,
   waitFor,
+  waitForElementToBeRemoved,
 } from '@testing-library/react';
 import AxiosMock from 'axios-mock-adapter';
 
@@ -38,7 +39,7 @@ describe('Dashboard component', () => {
       {
         amount: 0,
         category: 'electronics',
-        description: 'descrition test',
+        description: 'description test',
         id: 1,
         image: 'https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg',
         price: 10,
@@ -47,7 +48,7 @@ describe('Dashboard component', () => {
       {
         amount: 0,
         category: 'jewelery',
-        description: 'descrition test',
+        description: 'description test',
         id: 2,
         image: 'https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg',
         price: 60,
@@ -74,7 +75,7 @@ describe('Dashboard component', () => {
         {
           amount: 3,
           category: 'electronics',
-          description: 'descrition test',
+          description: 'description test',
           id: 1,
           image: 'https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg',
           price: 10,
@@ -84,7 +85,7 @@ describe('Dashboard component', () => {
         {
           amount: 2,
           category: 'jewelery',
-          description: 'descrition test',
+          description: 'description test',
           id: 2,
           image: 'https://fakestoreapi.com/img/71kWymZ+c+L._AC_SX679_.jpg',
           price: 60,
@@ -110,7 +111,7 @@ describe('Dashboard component', () => {
   });
 
   it('it should be able to filter category', async () => {
-    const { getAllByTestId, getByTestId, debug } = render(<Dashboard />);
+    render(<Dashboard />);
 
     await waitFor(() => {
       fireEvent.mouseDown(screen.getAllByLabelText('Categoria')[0]);
@@ -120,5 +121,28 @@ describe('Dashboard component', () => {
     const cards = screen.getAllByTestId('cart-product-quantity');
 
     expect(cards.length).toBe(1);
+  });
+
+  it('it should be able to open and close detail product modal', async () => {
+    render(<Dashboard />);
+
+    await waitFor(() => {
+      const [firstProductImg] = screen.getAllByRole('img');
+      fireEvent.click(firstProductImg);
+    });
+
+    expect(screen.getByText('description test')).toBeInTheDocument();
+
+    const closeModalButton = screen.getByTestId('close-modal');
+    fireEvent.click(closeModalButton);
+
+    waitFor(
+      () => {
+        expect(() => screen.getByText('description test')).toThrow(
+          'Unable to find an element',
+        );
+      },
+      { timeout: 200 },
+    );
   });
 });

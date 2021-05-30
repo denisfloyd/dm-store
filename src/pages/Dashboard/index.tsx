@@ -24,10 +24,7 @@ interface CartItemsAmount {
 }
 
 const Dashboard: React.FC = () => {
-  const [categories, setCategories] = useState<string[]>([
-    'electronics',
-    'jewelery',
-  ]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState<boolean>(true);
 
@@ -42,16 +39,16 @@ const Dashboard: React.FC = () => {
     return { ...sumAmount, [product.id]: product.amount };
   }, {} as CartItemsAmount);
 
-  // useEffect(() => {
-  //   // async function loadCategories(): Promise<void> {
-  //   //   const response = (await api('products/categories')).data as string[];
+  useEffect(() => {
+    async function loadCategories(): Promise<void> {
+      const response = (await api('products/categories')).data as string[];
 
-  //   //   setCategories(response);
-  //   // }
+      setCategories(response);
+    }
 
-  //   // loadCategories();
-  //   setCategories(['electronics', 'jewelery']);
-  // }, []);
+    loadCategories();
+    setCategories(['electronics', 'jewelery']);
+  }, []);
 
   useEffect(() => {
     async function loadProducts(): Promise<void> {
@@ -98,10 +95,7 @@ const Dashboard: React.FC = () => {
         <Select
           labelId="category-select-label"
           id="category-select"
-          data-testid="select"
-          // data-testid="select"
           value={selectedCategory}
-          input={<Input />}
           onChange={handleFilterCategory}
         >
           <MenuItem value="">

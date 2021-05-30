@@ -27,7 +27,7 @@ const ModalProductDetail: React.FC<ModalProductDetailProps> = ({
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       {product && (
-        <Container>
+        <Container id="modal">
           <Content>
             <ProductCard
               key={product.id}
@@ -46,7 +46,9 @@ const ModalProductDetail: React.FC<ModalProductDetailProps> = ({
             </ProductOtherInfosContainer>
           </Content>
 
-          <CloseIcon onClick={() => setIsOpen()}>X</CloseIcon>
+          <CloseIcon data-testid="close-modal" onClick={() => setIsOpen()}>
+            X
+          </CloseIcon>
         </Container>
       )}
     </Modal>
