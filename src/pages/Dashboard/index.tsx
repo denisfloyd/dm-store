@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CircularProgress, Input, MenuItem } from '@material-ui/core';
+import { CircularProgress, MenuItem } from '@material-ui/core';
 
 import { api } from '../../api/api';
 import { Product } from '../../types';
