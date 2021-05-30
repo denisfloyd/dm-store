@@ -1,4 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { api } from '../api/api';
 import { User } from '../types';
@@ -21,9 +22,10 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
     const storedUser = localStorage.getItem('@dmstore:user');
     return storedUser ? JSON.parse(storedUser) : null;
   });
+  const history = useHistory();
 
-  const authenticate = (username: string, password: string): void => {
-    api
+  const authenticate = (username: string, password: string): Promise<boolean> => {
+    return api
       .post('/auth/login', {
         username,
         password,
@@ -32,20 +34,24 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
         const { data } = res;
         if (data.status === 'Error') {
           if (data.msg.includes('username') || data.msg.includes('password')) {
-            console.log('error');
             toast.error('Usuário ou senha incorretos');
           } else {
             toast.error('Erro ao autenticar usuário');
           }
-        } else {
-          setUser({ username, token: data.token });
-          localStorage.setItem(
-            '@dmstore:user',
-            JSON.stringify({ username, token: data.token }),
-          );
+          return false;
         }
+        setUser({ username, token: data.token });
+        localStorage.setItem(
+          '@dmstore:user',
+          JSON.stringify({ username, token: data.token }),
+        );
+        history.push('/');
+        return true;
       })
-      .catch((err: any) => toast.error('Erro ao autenticar usuário'));
+      .catch((err: any) => {
+        toast.error('Erro ao autenticar usuário');
+        return false;
+      });
   };
 
   const getUser = (): User | null => {

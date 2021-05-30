@@ -19,7 +19,7 @@ export const ContainerOptions = styled.div`
 
   .user-logged {
     display: flex;
-    color: #fff;
+    color: var(--color-white);
     font-weight: bold;
     align-items: center;
     font-size: 1.5rem;
@@ -29,7 +29,7 @@ export const ContainerOptions = styled.div`
       z-index: 3;
       height: 0;
       overflow: hidden;
-      background-color: #fff;
+      background-color: var(--color-white);
       animation: slide-logout 0.3s linear;
       display: none;
       position: absolute;
@@ -204,7 +204,7 @@ export const Cart = styled(Link)`
 
     strong {
       display: block;
-      color: #fff;
+      color: var(--color-white);
     }
 
     span {
@@ -253,7 +253,7 @@ export const LogoTitle = styled.span`
   font-family: 'Londrina Solid', sans-serif;
   font-size: 5rem;
   margin-left: 1rem;
-  color: #fff;
+  color: var(--color-white);
 
   @media (max-width: 800px) {
     font-size: 3rem;

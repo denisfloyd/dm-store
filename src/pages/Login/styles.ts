@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { darken, lighten } from 'polished';
 
 export const Container = styled.div`
   display: flex;
@@ -32,10 +32,18 @@ export const FormLogin = styled.form`
       pointer-events: none;
     }
   }
+
+  @media (max-width: 800px) {
+    width: 40rem;
+  }
+
+  @media (max-width: 500px) {
+    width: 29rem;
+  }
 `;
 
 export const Input = styled.input`
-  background-color: #fff;
+  background-color: var(--color-white);
   width: 100%;
   height: 4rem;
   border-radius: 0.7rem;
@@ -47,7 +55,7 @@ export const Input = styled.input`
   &:valid ~ label {
     top: -0.5rem;
     left: 0;
-    color: #fff;
+    color: var(--color-white);
   }
 `;
 
@@ -55,25 +63,55 @@ export const UserIcon = styled.div`
   width: 7rem;
   height: 7rem;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: var(--color-white);
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
   top: -3.5rem;
+
+  @media (max-width: 800px) {
+    width: 6rem;
+    height: 6rem;
+    top: -3rem;
+  }
 `;
 
 export const SignInButton = styled.button`
   width: 20rem;
   height: 5rem;
-  font-weight: bold;
   margin-top: 2rem;
-  border-radius: 2.5rem;
-  background-color: transparent;
-  color: #fff;
-  border: 2px solid #f19536;
-`;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: 0;
+  border-radius: 4px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background 0.2s;
+  position: relative;
 
-export const SignInButtonActive = styled(SignInButton)`
-  background-color: #f19536;
+  .loading-container {
+    position: absolute;
+    right: 4rem;
+
+    @media (max-width: 500px) {
+      right: 2rem;
+    }
+  }
+
+  &:hover {
+    background: ${darken(0.06, '#FF9000')};
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: ${lighten(0.15, '#FF9000')};
+  }
+
+  @media (max-width: 500px) {
+    width: 15rem;
+  }
 `;

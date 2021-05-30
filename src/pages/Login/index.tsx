@@ -1,48 +1,22 @@
 import React, { useState } from 'react';
 import { MdPerson } from 'react-icons/md';
-import { useHistory } from 'react-router';
-
+import { CircularProgress } from '@material-ui/core';
 import { ContainerLogo, LogoTitle } from '../../components/Header/styles';
-import {
-  FormLogin,
-  Input,
-  SignInButton,
-  SignInButtonActive,
-  UserIcon,
-} from './styles';
+import { FormLogin, Input, SignInButton, UserIcon } from './styles';
 import { useAuth } from '../../hooks/useAuth';
 import { Container } from './styles';
 import logo from '../../assets/images/logo-dm.png';
 
-interface DisplayButtonProps {
-  username: string;
-  password: string;
-}
-
-const DisplayButton: React.FC<DisplayButtonProps> = ({
-  username,
-  password,
-}): JSX.Element => {
-  const { authenticate } = useAuth();
-  const { goBack } = useHistory();
-
-  const handleAuthenticate = (): void => {
-    authenticate(username, password);
-    goBack();
-  };
-
-  return username.length > 0 && password.length > 0 ? (
-    <SignInButtonActive onClick={() => handleAuthenticate()} type="button">
-      LOGIN
-    </SignInButtonActive>
-  ) : (
-    <SignInButton type="button">LOGIN</SignInButton>
-  );
-};
-
 const Login: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { authenticate } = useAuth();
+
+  const handleAuthenticate = async (): Promise<void> => {
+    await authenticate(username, password);
+    setLoading(false);
+  };
 
   return (
     <Container>
@@ -63,19 +37,37 @@ const Login: React.FC = () => {
             value={username}
             onChange={event => setUsername(event.target.value)}
           />
-          <label>Nome de usuário</label>
+          <label htmlFor="username">Nome de usuário</label>
         </div>
         <div className="input-container">
           <Input
             type="password"
             name="password"
+            id="password"
             required
             value={password}
             onChange={event => setPassword(event.target.value)}
           />
-          <label>Senha</label>
+          <label htmlFor="password">Senha</label>
         </div>
-        <DisplayButton username={username} password={password} />
+        <SignInButton
+          type="button"
+          disabled={
+            username.trim().length === 0 || password.trim().length === 0
+          }
+          onClick={() => {
+            setLoading(true);
+            handleAuthenticate();
+          }}
+        >
+          <span>LOGIN</span>
+          {
+            loading && (
+            <div className="loading-container">
+              <CircularProgress color="inherit" size={20} />
+            </div>
+          )}
+        </SignInButton>
       </FormLogin>
     </Container>
   );
