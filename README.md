@@ -38,10 +38,6 @@
   </span>
 </p>
 
-<p align="center">
-  <img src=".github/sample.gif">
-</p>
-
 # :pushpin: Table of Contents
 
 * [Technologies](#computer-technologies)
