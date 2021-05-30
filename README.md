@@ -34,7 +34,7 @@
 <p align="center"
   <br /><br />
   <span>
-    <a href="https://pinkfloyd-discography-denismend.netlify.app/" target="_blank">DEMO</a>
+    <a href="https://denisladeira-dm-store.netlify.app/" target="_blank">DEMO</a>
   </span>
 </p>
 
