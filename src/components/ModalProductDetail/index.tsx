@@ -16,7 +16,6 @@ interface ModalProductDetailProps {
   setIsOpen: () => void;
   productAmountInCart: number;
   product: Product;
-  addProductToCart: (product: Product) => void;
 }
 
 const ModalProductDetail: React.FC<ModalProductDetailProps> = ({
@@ -24,7 +23,6 @@ const ModalProductDetail: React.FC<ModalProductDetailProps> = ({
   setIsOpen,
   productAmountInCart,
   product,
-  addProductToCart,
 }) => {
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
@@ -36,7 +34,6 @@ const ModalProductDetail: React.FC<ModalProductDetailProps> = ({
               product={product}
               amountInCart={productAmountInCart}
               seeProductDetail={null}
-              addProductToCart={() => addProductToCart(product)}
             />
 
             <ProductOtherInfosContainer>

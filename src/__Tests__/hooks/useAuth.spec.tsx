@@ -1,6 +1,9 @@
+import { ReactNode } from 'react';
+
 import { renderHook, act } from '@testing-library/react-hooks';
 import AxiosMock from 'axios-mock-adapter';
 import { toast } from 'react-toastify';
+
 import { useAuth, AuthProvider } from '../../hooks/useAuth';
 import { api } from '../../api/api';
 
@@ -8,6 +11,16 @@ const apiMock = new AxiosMock(api);
 
 jest.mock('react-toastify');
 const mockedToastError = toast.error as jest.Mock;
+
+const mockedRouterLink = jest.fn();
+jest.mock('react-router-dom', () => {
+  return {
+    Link: ({ children }: { children: ReactNode }) => children,
+    useHistory: () => ({
+      push: mockedRouterLink,
+    }),
+  };
+});
 
 describe('useAuth hook', () => {
   beforeEach(() => {
@@ -42,6 +55,7 @@ describe('useAuth hook', () => {
       }),
     );
     expect(result.current.user?.username).toEqual('John Doe');
+    expect(mockedRouterLink).toHaveBeenCalledTimes(1);
   });
 
   it('should not be able to signin with wrong user or password', async () => {
@@ -88,6 +102,7 @@ describe('useAuth hook', () => {
   });
 
   it('should be able to sign out', async () => {
+    mockedRouterLink.mockReset();
     jest.spyOn(Storage.prototype, 'getItem').mockImplementation(key => {
       return JSON.stringify({
         username: 'John Doe',
@@ -108,5 +123,6 @@ describe('useAuth hook', () => {
     expect(removeItemSpy).toHaveBeenCalledTimes(1);
     expect(result.current.user?.username).toBeUndefined();
     expect(result.current.user?.token).toBeUndefined();
+    expect(mockedRouterLink).toHaveBeenCalledTimes(1);
   });
 });

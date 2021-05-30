@@ -5,6 +5,7 @@ import Route from './Route';
 
 const Routes = (): JSX.Element => {
   const DashboardComponent = React.lazy(() => import('../pages/Dashboard'));
+  const FavoritesComponent = React.lazy(() => import('../pages/Favorites'));
   const CartComponent = React.lazy(() => import('../pages/Cart'));
   const LoginComponent = React.lazy(() => import('../pages/Login'));
 
@@ -15,7 +16,7 @@ const Routes = (): JSX.Element => {
       <Route
         path="/favorites"
         isPrivate
-        component={() => <DashboardComponent favorites />}
+        component={FavoritesComponent}
         key="favorites"
       />
       <Route path="/cart" component={CartComponent} />

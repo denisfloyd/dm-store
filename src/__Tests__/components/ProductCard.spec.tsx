@@ -57,9 +57,6 @@ describe('ProductCard component', () => {
         product={product}
         amountInCart={product.amount}
         seeProductDetail={null}
-        addProductToCart={() => {
-          return true;
-        }}
       />,
     );
 
@@ -83,9 +80,6 @@ describe('ProductCard component', () => {
         product={product}
         amountInCart={product.amount}
         seeProductDetail={null}
-        addProductToCart={() => {
-          return true;
-        }}
       />,
     );
 

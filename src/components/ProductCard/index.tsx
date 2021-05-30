@@ -18,7 +18,6 @@ interface ProductCardProps {
   product: Product;
   amountInCart: number;
   seeProductDetail: ((product: Product) => void) | null;
-  addProductToCart: (product: Product) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({

@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { CircularProgress, MenuItem } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { CircularProgress, Input, MenuItem } from '@material-ui/core';
 
 import { api } from '../../api/api';
 import { Product } from '../../types';
@@ -17,26 +17,21 @@ import {
 } from './styles';
 
 import { useCart } from '../../hooks/useCart';
-import { useFavorites } from '../../hooks/useFavorites';
 import ModalProductDetail from '../../components/ModalProductDetail';
 
 interface CartItemsAmount {
   [key: number]: number;
 }
 
-interface DashboardProps {
-  favorites?: boolean;
-}
-
-const Dashboard: React.FC<DashboardProps> = ({
-  favorites: isFavoritePage = false,
-}) => {
-  const { addProduct, cart } = useCart();
-  const { favorites } = useFavorites();
-
-  const [categories, setCategories] = useState<string[]>();
+const Dashboard: React.FC = () => {
+  const [categories, setCategories] = useState<string[]>([
+    'electronics',
+    'jewelery',
+  ]);
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoadingProducts, setIsLoadingProducts] = useState<boolean>(true);
+
+  const { cart } = useCart();
 
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
@@ -47,39 +42,16 @@ const Dashboard: React.FC<DashboardProps> = ({
     return { ...sumAmount, [product.id]: product.amount };
   }, {} as CartItemsAmount);
 
-  useEffect(() => {
-    async function loadCategories(): Promise<void> {
-      const response = (await api('products/categories')).data as string[];
+  // useEffect(() => {
+  //   // async function loadCategories(): Promise<void> {
+  //   //   const response = (await api('products/categories')).data as string[];
 
-      setCategories(response);
-    }
+  //   //   setCategories(response);
+  //   // }
 
-    loadCategories();
-  }, []);
-
-  const filterAndFormatProductData = useCallback(
-    (productsFromApi: Product[]) => {
-      let productFormatted: Product[] = isFavoritePage
-        ? [
-            ...productsFromApi.filter(product => {
-              return favorites.includes(product.id);
-            }),
-          ]
-        : [...productsFromApi];
-
-      productFormatted = [
-        ...productFormatted.map(product => {
-          return {
-            ...product,
-            priceFormatted: formatPrice(product.price),
-          };
-        }),
-      ];
-
-      setProducts(productFormatted);
-    },
-    [favorites, isFavoritePage],
-  );
+  //   // loadCategories();
+  //   setCategories(['electronics', 'jewelery']);
+  // }, []);
 
   useEffect(() => {
     async function loadProducts(): Promise<void> {
@@ -89,13 +61,17 @@ const Dashboard: React.FC<DashboardProps> = ({
       const response = (await api(`products${selectedCategoryFilter}`))
         .data as Product[];
 
-      filterAndFormatProductData(response);
+      setProducts(
+        response.map(product => {
+          return { ...product, priceFormatted: formatPrice(product.price) };
+        }),
+      );
 
       setIsLoadingProducts(false);
     }
 
     loadProducts();
-  }, [isFavoritePage, selectedCategory, filterAndFormatProductData]);
+  }, [selectedCategory]);
 
   const handleFilterCategory = (event: any): void => {
     if (event.target.value !== selectedCategory) {
@@ -113,42 +89,42 @@ const Dashboard: React.FC<DashboardProps> = ({
     setModalOpen(true);
   }
 
-  function handleAddProductToCart(product: Product): void {
-    addProduct(product);
-  }
-
   return (
     <Container>
-      {!isFavoritePage && (
-        <SelectContainer variant="filled">
-          <InputLabelSelect id="category-select-label">
-            Categoria
-          </InputLabelSelect>
-          <Select
-            labelId="category-select"
-            id="category-select"
-            value={selectedCategory}
-            onChange={handleFilterCategory}
-          >
-            <MenuItem value="">
-              <em>Todas</em>
-            </MenuItem>
-            {categories &&
-              categories.map(category => (
-                <SelectMenuIcon key={category} value={category}>
-                  {category}
-                </SelectMenuIcon>
-              ))}
-          </Select>
-        </SelectContainer>
-      )}
+      <SelectContainer variant="filled">
+        <InputLabelSelect id="category-select-label">
+          Categoria
+        </InputLabelSelect>
+        <Select
+          labelId="category-select-label"
+          id="category-select"
+          data-testid="select"
+          // data-testid="select"
+          value={selectedCategory}
+          input={<Input />}
+          onChange={handleFilterCategory}
+        >
+          <MenuItem value="">
+            <em>Todas</em>
+          </MenuItem>
+          {categories &&
+            categories.map(category => (
+              <SelectMenuIcon
+                data-testid={`${category}-filter`}
+                key={category}
+                value={category}
+              >
+                {category}
+              </SelectMenuIcon>
+            ))}
+        </Select>
+      </SelectContainer>
 
       <ModalProductDetail
         isOpen={modalOpen}
         setIsOpen={toggleModal}
         product={selectProduct}
         productAmountInCart={cartItemsAmount[selectProduct.id]}
-        addProductToCart={() => handleAddProductToCart(selectProduct)}
       />
 
       {isLoadingProducts ? (
@@ -158,13 +134,12 @@ const Dashboard: React.FC<DashboardProps> = ({
       ) : (
         <ProductList>
           {products &&
-            products.map((product: Product, index: number) => (
+            products.map((product: Product) => (
               <ProductCard
                 key={product.id}
                 product={product}
                 amountInCart={cartItemsAmount[product.id]}
                 seeProductDetail={handleSeeProductDetail}
-                addProductToCart={() => handleAddProductToCart(product)}
               />
             ))}
         </ProductList>

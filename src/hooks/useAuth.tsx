@@ -24,7 +24,10 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   });
   const history = useHistory();
 
-  const authenticate = (username: string, password: string): Promise<boolean> => {
+  const authenticate = (
+    username: string,
+    password: string,
+  ): Promise<boolean> => {
     return api
       .post('/auth/login', {
         username,
@@ -45,7 +48,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
           '@dmstore:user',
           JSON.stringify({ username, token: data.token }),
         );
-        history.push('/');
+        history.push('');
         return true;
       })
       .catch((err: any) => {
@@ -61,6 +64,7 @@ export function AuthProvider({ children }: AuthProviderProps): JSX.Element {
   const logout = (): void => {
     localStorage.removeItem('@dmstore:user');
     setUser(null);
+    history.push('');
   };
 
   return (
