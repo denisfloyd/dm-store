@@ -15,7 +15,13 @@ import { useCart } from '../../hooks/useCart';
 import { Product } from '../../types';
 import { formatPrice } from '../../utils/format';
 
-import { Container, ProductTable, CheckoutButton, Total } from './styles';
+import {
+  Container,
+  ProductTable,
+  NoProductText,
+  CheckoutButton,
+  Total,
+} from './styles';
 import { useAuth } from '../../hooks/useAuth';
 
 interface ProductFormatted extends Product {
@@ -99,16 +105,18 @@ const Cart = (): JSX.Element => {
     <Container>
       <ProductTable>
         <thead>
-          <tr>
-            <th aria-label="product image" />
-            <th>PRODUTO</th>
-            <th>QUANTIDADE</th>
-            <th>SUBTOTAL</th>
-            <th aria-label="delete icon" />
-          </tr>
+          {cartFormatted && cartFormatted.length > 0 && (
+            <tr>
+              <th aria-label="product image" />
+              <th>PRODUTO</th>
+              <th>QUANTIDADE</th>
+              <th>SUBTOTAL</th>
+              <th aria-label="delete icon" />
+            </tr>
+          )}
         </thead>
         <tbody>
-          {cartFormatted &&
+          {cartFormatted && cartFormatted.length > 0 ? (
             cartFormatted.map((product: ProductFormatted) => (
               <tr data-testid="product" key={product.id}>
                 <td>
@@ -156,7 +164,10 @@ const Cart = (): JSX.Element => {
                   </button>
                 </td>
               </tr>
-            ))}
+            ))
+          ) : (
+            <NoProductText>Não há produtos no carrinho!</NoProductText>
+          )}
         </tbody>
       </ProductTable>
 

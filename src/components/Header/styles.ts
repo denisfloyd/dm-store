@@ -36,7 +36,7 @@ export const ContainerOptions = styled.div`
       right: 0;
       top: 4rem;
       width: 25rem;
-      border: solid 1px var(--color-yellow-logo);
+      border: solid 0.3rem var(--color-yellow-logo);
       border-radius: 0.5rem;
 
       &-content {
@@ -116,7 +116,7 @@ export const Cart = styled(Link)`
     right: 0;
     top: 4rem;
     width: 30rem;
-    border: solid 0.5rem var(--color-yellow-logo);
+    border: solid 0.3rem var(--color-yellow-logo);
     border-radius: 0.5rem;
 
     &-total {
@@ -330,7 +330,7 @@ export const Menu = styled.div`
     position: absolute;
     right: 0;
     width: 25rem;
-    border: solid 1px var(--color-yellow-logo);
+    border: solid 0.3rem var(--color-yellow-logo);
     border-radius: 0.5rem;
 
     a,

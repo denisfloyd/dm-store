@@ -82,6 +82,11 @@ export const ProductTable = styled.table`
   }
 `;
 
+export const NoProductText = styled.p`
+  font-size: 2rem;
+  font-weight: bold;
+`;
+
 export const CheckoutButton = styled.button`
   background: var(--color-success);
   color: var(--color-white);
