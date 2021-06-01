@@ -176,9 +176,11 @@ const PrimaryMenuContent: React.FC<PrimaryMenuContentProps> = ({
           </div>
         )}
       </Cart>
-      <Favorites to="/favorites">
-        <MdFavorite size={36} color="#FFFFFF" />
-      </Favorites>
+      {user && (
+        <Favorites to="/favorites">
+          <MdFavorite size={36} color="#FFFFFF" />
+        </Favorites>
+      )}
       <UserComponent user={user} context="screen" />
     </ContainerOptions>
   );
@@ -214,12 +216,14 @@ const Header = (): JSX.Element => {
               </div>
             </div>
           </Cart>
-          <Favorites to="/favorites">
-            <div>
-              <MdFavorite size={36} color="#494B62" />
-              <span>Favoritos</span>
-            </div>
-          </Favorites>
+          {user && (
+            <Favorites to="/favorites">
+              <div>
+                <MdFavorite size={36} color="#494B62" />
+                <span>Favoritos</span>
+              </div>
+            </Favorites>
+          )}
         </div>
       </Menu>
     </Container>

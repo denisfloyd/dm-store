@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import AxiosMock from 'axios-mock-adapter';
 
 import { useCart } from '../../hooks/useCart';
