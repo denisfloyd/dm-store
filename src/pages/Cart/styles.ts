@@ -82,7 +82,7 @@ export const ProductTable = styled.table`
   }
 `;
 
-export const NoProductText = styled.p`
+export const NoProductText = styled.td`
   font-size: 2rem;
   font-weight: bold;
 `;

@@ -166,7 +166,9 @@ const Cart = (): JSX.Element => {
               </tr>
             ))
           ) : (
-            <NoProductText>Não há produtos no carrinho!</NoProductText>
+            <tr>
+              <NoProductText>Não há produtos no carrinho!</NoProductText>
+            </tr>
           )}
         </tbody>
       </ProductTable>
@@ -174,6 +176,7 @@ const Cart = (): JSX.Element => {
       <footer>
         <CheckoutButton
           type="button"
+          data-testid="checkout-button"
           disabled={cart.length === 0}
           onClick={handleCheckoutCart}
         >

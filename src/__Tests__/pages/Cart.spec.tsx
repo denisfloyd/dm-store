@@ -1,8 +1,12 @@
-import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import React, { ReactNode } from 'react';
+import { render, fireEvent, waitFor, act } from '@testing-library/react';
+import AxiosMock from 'axios-mock-adapter';
 
+import { toast } from 'react-toastify';
 import { useCart } from '../../hooks/useCart';
 import Cart from '../../pages/Cart';
+import { api } from '../../api/api';
+import { useAuth } from '../../hooks/useAuth';
 
 const mockedRemoveProduct = jest.fn();
 const mockedUpdateProductAmount = jest.fn();
@@ -10,8 +14,36 @@ const mockedUseCartHook = useCart as jest.Mock;
 
 jest.mock('../../hooks/useCart');
 
+const apiMock = new AxiosMock(api);
+
+const mocketUseAuth = useAuth as jest.Mock;
+jest.mock('../../hooks/useAuth');
+
+const mockedRouterLink = jest.fn();
+jest.mock('react-router', () => {
+  return {
+    useHistory: () => ({
+      push: mockedRouterLink,
+    }),
+  };
+});
+
+jest.mock('react-toastify');
+const mockedToastWarning = toast.warning as jest.Mock;
+
 describe('Cart Page', () => {
+  beforeAll(() => {
+    apiMock.onPost('/carts').reply(200, 'ok');
+  });
+
   beforeEach(() => {
+    mocketUseAuth.mockReturnValue({
+      user: {
+        username: 'John Doe',
+        token: 'fake-token',
+      },
+    });
+
     mockedUseCartHook.mockReturnValue({
       cart: [
         {
@@ -37,10 +69,11 @@ describe('Cart Page', () => {
       ],
       removeProduct: mockedRemoveProduct,
       updateProductAmount: mockedUpdateProductAmount,
+      clearCart: jest.fn(),
     });
   });
 
-  it('should br able to render cart', () => {
+  it('should be able to render cart', () => {
     const { getAllByTestId, getByTestId } = render(<Cart />);
 
     const [firstProductAmount, secondProductAmount] =
@@ -50,6 +83,17 @@ describe('Cart Page', () => {
     expect(secondProductAmount).toHaveDisplayValue('2');
 
     expect(getByTestId('total-cart')).toHaveTextContent('150.00');
+  });
+
+  it('should br able to show a disclaimer when cart does not have producs', () => {
+    mockedUseCartHook.mockReturnValueOnce({
+      cart: [],
+    });
+
+    const { getByText, getByTestId } = render(<Cart />);
+
+    expect(getByText('Não há produtos no carrinho!')).toBeInTheDocument();
+    expect(getByTestId('checkout-button')).toHaveProperty('disabled');
   });
 
   it('should be able to increase/decrease a product amount', () => {
@@ -166,5 +210,47 @@ describe('Cart Page', () => {
 
     expect(firstProduct).not.toBeInTheDocument();
     expect(secondProduct).toBeInTheDocument();
+  });
+
+  it('should be able to checkout cart', async () => {
+    const { getByTestId, queryAllByTestId, rerender } = render(<Cart />);
+
+    const checkoutButton = getByTestId('checkout-button');
+
+    act(() => {
+      fireEvent.click(checkoutButton);
+    });
+
+    await waitFor(() => {
+      expect(mockedRouterLink).toHaveBeenCalledWith('');
+    });
+
+    mockedUseCartHook.mockReturnValueOnce({
+      cart: [],
+    });
+
+    rerender(<Cart />);
+    const allProductAmounInCart = queryAllByTestId('all-product-amount');
+    expect(allProductAmounInCart).toEqual([]);
+  });
+
+  it('should not be able to checkout cart with no authenticated user', async () => {
+    mocketUseAuth.mockReturnValue({
+      user: null,
+    });
+
+    const { getByTestId } = render(<Cart />);
+
+    const checkoutButton = getByTestId('checkout-button');
+
+    act(() => {
+      fireEvent.click(checkoutButton);
+    });
+
+    await waitFor(() => {
+      expect(mockedToastWarning).toHaveBeenCalledWith(
+        'Para finalizar a compra é necessário realizar o Login!',
+      );
+    });
   });
 });
