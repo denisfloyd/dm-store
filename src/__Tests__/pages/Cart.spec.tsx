@@ -82,7 +82,7 @@ describe('Cart Page', () => {
     expect(firstProductAmount).toHaveDisplayValue('3');
     expect(secondProductAmount).toHaveDisplayValue('2');
 
-    expect(getByTestId('total-cart')).toHaveTextContent('150.00');
+    expect(getByTestId('total-cart')).toHaveTextContent('150');
   });
 
   it('should br able to show a disclaimer when cart does not have producs', () => {
